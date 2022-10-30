@@ -1,0 +1,9 @@
+block "test_block" {
+	type "custom" {
+		pistonBehavior "destroy"
+	}
+	settings material="wood" {
+		hardness 0.2
+	}
+	item
+}

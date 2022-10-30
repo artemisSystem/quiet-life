@@ -1,0 +1,8 @@
+{
+	"parent": "quiet_life:hollow_log",
+	"textures": {
+		"side": "kdlycontent:scarlet_log",
+		"inside": "kdlycontent:stripped_scarlet_log",
+		"end": "kdlycontent:scarlet_log_top"
+	}
+}

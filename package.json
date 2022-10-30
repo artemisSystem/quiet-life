@@ -1,0 +1,12 @@
+{
+	"private": true,
+	"scripts": {
+		"build": "spago build",
+		"docs": "spago docs",
+		"run_datagen": "spago run",
+		"repl": "spago repl"
+	},
+	"dependencies": {
+		"kdljs": "^0.1.4"
+	}
+}
