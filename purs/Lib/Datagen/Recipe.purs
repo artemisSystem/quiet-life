@@ -24,12 +24,23 @@ instance
     where
     id = reflectType (Proxy ∷ _ id)
 
-data Ingredient
+data SingleIngredient
   = Tag String
   | Item String
+
+data Ingredient
+  = Single SingleIngredient
   | Multiple (Array Ingredient)
 
 instance WriteForeign Ingredient where
-  writeForeign (Tag tag) = writeForeign { tag }
-  writeForeign (Item item) = writeForeign { item }
+  writeForeign (Single (Tag tag)) = writeForeign { tag }
+  writeForeign (Single (Item item)) = writeForeign { item }
   writeForeign (Multiple array) = writeForeign array
+
+newtype CraftingResult = CraftingResult
+  { count ∷ Int
+  , item ∷ String
+  }
+
+instance WriteForeign CraftingResult where
+  writeForeign (CraftingResult result) = writeForeign result
