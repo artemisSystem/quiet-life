@@ -12,6 +12,7 @@ import Foreign (FT, renderForeignError)
 import Lib.Datagen.Worldgen.DensityFunction (DensityFunction(..), DirectDensityFunction(..))
 import Lib.Deserializer (readData)
 import Lib.Serializer (DataPack, Serializer, serializer, writeData, writeDatum)
+import Node.FS.Aff (rm')
 import QuietLife.Blocks as Blocks
 import QuietLife.Models as Models
 
@@ -39,7 +40,7 @@ app = do
 
     ser
       ∷ Array
-          ( Serializer (DataPack "quiet_life" "worldgen/noise_settings")
+          ( Serializer (DataPack "quiet_life" "worldgen/density_function")
               DirectDensityFunction
           )
     ser = [ serializer "test" newDf ]
@@ -47,9 +48,11 @@ app = do
 
 main ∷ Effect Unit
 main = launchAff_ do
-  -- writeData "generated/resourcepacks/block_assets" Models.models
-  -- writeData "generated/resourcepacks/block_assets" Models.blockstates
-  -- writeDatum "generated" Blocks.blocks
+  rm' "generated"
+    { recursive: true, force: true, maxRetries: 0, retryDelay: 100 }
+  writeData "generated/resourcepacks/block_assets" Models.models
+  writeData "generated/resourcepacks/block_assets" Models.blockstates
+  writeDatum "generated" Blocks.blocks
   runExceptT app >>= case _ of
     Right _ → pure unit
     Left e → traverse_ logShow e
