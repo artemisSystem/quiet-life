@@ -13,9 +13,9 @@ instance WriteForeign Rotation where
   -- 0 is the default and can be omitted for brevity in places where a rotation
   -- is expected.
   writeForeign R0 = undefined
-  writeForeign R90 = writeForeign "90"
-  writeForeign R180 = writeForeign "180"
-  writeForeign R270 = writeForeign "270"
+  writeForeign R90 = writeForeign 90
+  writeForeign R180 = writeForeign 180
+  writeForeign R270 = writeForeign 270
 
 type SingleVariant r =
   { model ∷ String

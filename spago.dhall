@@ -25,5 +25,5 @@
   , "transformers"
   ]
 , packages = ./packages.dhall
-, sources = [ "purs/**/*.purs" ]
+, sources = [ "src/**/*.purs" ]
 }

@@ -19,7 +19,6 @@ import QuietLife.Models as Models
 app ∷ FT Aff Unit
 app = do
   df ←
-    -- Direct <$> readData "vanilla_json/test.json"
     readData "vanilla_json/overworld_final_density.json"
       ∷ _ DensityFunction
   let

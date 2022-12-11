@@ -5,7 +5,7 @@
 		"docs": "spago docs",
 		"run_datagen": "spago run",
 		"repl": "spago repl",
-		"format": "purs-tidy format-in-place purs"
+		"format": "purs-tidy format-in-place src"
 	},
 	"dependencies": {
 		"kdljs": "^0.1.5"

@@ -8,6 +8,7 @@
 !/packages.dhall
 !/spago.dhall
 !/generated/
-!/purs/
+!/src/
 !/resources/
 !/vanilla_json/
+!/.vscode
