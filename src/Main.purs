@@ -4,11 +4,11 @@ import Prelude
 
 import Control.Monad.Except (lift, runExceptT)
 import Data.Either (Either(..))
-import Data.Traversable (traverse, traverse_)
+import Data.Traversable (traverse_)
 import Effect (Effect)
 import Effect.Aff (Aff, launchAff_)
-import Effect.Class.Console (log, logShow)
-import Foreign (FT, renderForeignError)
+import Effect.Class.Console (logShow)
+import Foreign (FT)
 import Lib.Datagen.Worldgen.DensityFunction (DensityFunction(..), DirectDensityFunction(..))
 import Lib.Deserializer (readData)
 import Lib.Serializer (DataPack, Serializer, serializer, writeData, writeDatum)
@@ -18,9 +18,7 @@ import QuietLife.Models as Models
 
 app ∷ FT Aff Unit
 app = do
-  df ←
-    readData "vanilla_json/overworld_final_density.json"
-      ∷ _ DensityFunction
+  (df ∷ DensityFunction) ← readData "vanilla_json/overworld_final_density.json"
   let
     newDf = RangeChoice
       { input: Direct $ Interpolated $ Direct $ FlatCache $ Reference
