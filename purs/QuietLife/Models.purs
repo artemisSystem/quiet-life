@@ -23,8 +23,8 @@ models = S.do
       , inside: fold [ namespace, ":", "stripped_", name, "_", logSuffix ]
       }
 
-blockstates ∷ Array
-  (Serializer (ResourcePack "minecraft" "blockstates") Blockstate)
+blockstates
+  ∷ Array (Serializer (ResourcePack "minecraft" "blockstates") Blockstate)
 blockstates = U.unfold U.do
   serializer "wall_torch" $ VariantBlockstate
     ( Object.empty

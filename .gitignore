@@ -7,4 +7,5 @@
 /.psc*
 /.psa*
 /.spago
+/mcmeta-*/
 .DS_Store

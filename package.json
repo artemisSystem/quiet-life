@@ -4,9 +4,16 @@
 		"build": "spago build",
 		"docs": "spago docs",
 		"run_datagen": "spago run",
-		"repl": "spago repl"
+		"repl": "spago repl",
+		"format": "purs-tidy format-in-place purs"
 	},
 	"dependencies": {
-		"kdljs": "^0.1.4"
+		"kdljs": "^0.1.5"
+	},
+	"devDependencies": {
+		"purescript": "^0.15.6",
+		"purescript-psa": "^0.8.2",
+		"purs-tidy": "^0.9.2",
+		"spago": "^0.20.9"
 	}
 }

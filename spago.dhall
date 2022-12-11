@@ -1,13 +1,17 @@
 { name = "quiet-life-datagen"
 , dependencies =
   [ "aff"
+  , "arrays"
   , "console"
+  , "control"
   , "debug"
   , "effect"
+  , "either"
   , "foldable-traversable"
   , "foreign"
   , "foreign-object"
   , "foreign-readwrite"
+  , "lists"
   , "maybe"
   , "newtype"
   , "node-buffer"
@@ -18,6 +22,7 @@
   , "qualified-do"
   , "record"
   , "strings"
+  , "transformers"
   ]
 , packages = ./packages.dhall
 , sources = [ "purs/**/*.purs" ]
