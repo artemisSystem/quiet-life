@@ -19,7 +19,7 @@ isStripped { name } = isJust $ stripPrefix (Pattern "stripped_") name
 
 existingLogs ∷ Array LogDefinition
 existingLogs = S.do
-  [ "oak", "spruce", "birch", "jungle", "dark_oak", "acacia" ] <#>
+  [ "oak", "spruce", "birch", "jungle", "dark_oak", "acacia", "mangrove" ] <#>
     { namespace: "minecraft", logSuffix: "log", woodSuffix: "wood", name: _ }
   [ "warped", "crimson" ] <#>
     { namespace: "minecraft", logSuffix: "stem", woodSuffix: "hyphae", name: _ }
