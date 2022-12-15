@@ -8,8 +8,10 @@ import Data.Semigroup.First (First)
 import Foreign.Object as Object
 import Lib.Datagen.Blockstate (Blockstate(..), Rotation(..), rotatedVariant)
 import Lib.Datagen.KdlyContent.Block (block, box)
+import Lib.Datagen.Lang (Lang, simpleLangName)
 import Lib.Datagen.Model (Model, itemModel)
 import Lib.Datagen.Model as Model
+import Lib.Datagen.Recipe.ShapedCrafting (ShapedCraftingRecipe)
 import Lib.Kdl (Kdl, KdlNode, appendProp, appendValue, node, unfoldChildren)
 import Lib.Kdl as Kdl
 import Lib.Util ((/), toSMap)
@@ -23,8 +25,8 @@ type DefaultBlockRows r =
   ( blocks ∷ Writer Kdl
   , blockstates ∷ Writer (SemigroupMap String (First Blockstate))
   , models ∷ Writer (SemigroupMap String (First Model))
-  -- , lang ∷ Writer Lang
-  -- , recipes ∷ Writer (SemigroupMap String ShapedCraftingRecipe)
+  , lang ∷ Writer Lang
+  , recipes ∷ Writer (SemigroupMap String (First ShapedCraftingRecipe))
   | r
   )
 
@@ -36,6 +38,12 @@ _blockstates = Proxy
 
 _models ∷ Proxy "models"
 _models = Proxy
+
+_lang ∷ Proxy "lang"
+_lang = Proxy
+
+_recipes ∷ Proxy "recipes"
+_recipes = Proxy
 
 hollowLogName ∷ LogDefinition → String
 hollowLogName log = "hollow_" <> log.name <> "_" <> log.logSuffix
@@ -97,3 +105,4 @@ hollowLog log = do
   tellAt _blockstates $ toSMap
     (Map.singleton (hollowLogName log) (hollowLogBlockstate log))
   tellAt _models (hollowLogModels log)
+  tellAt _lang (simpleLangName (hollowLogName log))

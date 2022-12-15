@@ -4,11 +4,12 @@ import Prelude
 
 import Data.Reflectable (class Reflectable, reflectType)
 import Foreign.ReadWrite (class WriteForeign, writeForeign)
-import Lib.Serializer (class IsDataType)
+import Lib.Json (unsafeFormatJson)
+import Lib.Serializer (class IsDataType, class Serializable)
 import Record (union)
 import Type.Proxy (Proxy(..))
 
-newtype Recipe (id ∷ Symbol) (recipe ∷ Type) = Recipe recipe
+newtype Recipe (id ∷ Symbol) (recipe ∷ Row Type) = Recipe (Record recipe)
 
 instance IsDataType (Recipe id fields) where
   getFileExtension _ = "json"
@@ -17,12 +18,17 @@ instance
   ( Reflectable id String
   , WriteForeign { id ∷ String | fields }
   ) ⇒
-  WriteForeign (Recipe id (Record fields)) where
-  writeForeign (Recipe record) = record
+  WriteForeign (Recipe id fields) where
+  writeForeign (Recipe recipe) = recipe
     # union { id }
     # writeForeign
     where
     id = reflectType (Proxy ∷ _ id)
+
+instance
+  WriteForeign (Recipe id fields) ⇒
+  Serializable (Recipe id fields) where
+  serialize recipe = unsafeFormatJson (writeForeign recipe)
 
 data SingleIngredient
   = Tag String
