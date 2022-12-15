@@ -9,6 +9,5 @@
 !/spago.dhall
 !/generated/
 !/src/
-!/resources/
-!/vanilla_json/
+!/core_assets/
 !/.vscode
