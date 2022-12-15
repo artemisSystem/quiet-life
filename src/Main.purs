@@ -21,4 +21,4 @@ main = launchAff_ do
     # writeData _models (assets / "kdlycontent" / "models")
     # runBaseAff
   where
-  assets = "generated" / "resourcepacks" / "core_assets_generated" / "assets"
+  assets = "generated" / "resources" / "core_assets_generated" / "assets"

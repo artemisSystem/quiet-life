@@ -4,6 +4,7 @@
 		"build": "spago build",
 		"docs": "spago docs",
 		"run_datagen": "spago run",
+		"deploy": "npm run run_datagen && ./deploy.sh",
 		"repl": "spago repl",
 		"format": "purs-tidy format-in-place src"
 	},

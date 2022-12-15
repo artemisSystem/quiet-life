@@ -11,3 +11,4 @@
 !/src/
 !/core_assets/
 !/.vscode
+!/deploy.sh
