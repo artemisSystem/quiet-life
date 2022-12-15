@@ -1,8 +1,0 @@
-{
-	"parent": "quiet_life:hollow_log",
-	"textures": {
-		"side": "botania:dreamwood_log",
-		"inside": "botania:stripped_dreamwood_log",
-		"end": "botania:dreamwood_log_top"
-	}
-}

@@ -1,10 +1,8 @@
 module Lib.Datagen.Recipe.ManaInfusion where
 
-import Prelude
-
 import Lib.Datagen.Recipe (Ingredient)
 
-newtype ManaInfusionRecipe = ManaInfusionRecipe
+newtype ManaInfusionRecipeData = ManaInfusionRecipeData
   { input ∷ Ingredient
   , mana ∷ Int
   -- , 

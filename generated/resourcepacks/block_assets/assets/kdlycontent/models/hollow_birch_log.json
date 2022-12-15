@@ -1,8 +1,0 @@
-{
-	"parent": "quiet_life:hollow_log",
-	"textures": {
-		"side": "minecraft:birch_log",
-		"inside": "minecraft:stripped_birch_log",
-		"end": "minecraft:birch_log_top"
-	}
-}

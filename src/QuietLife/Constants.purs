@@ -2,10 +2,20 @@ module QuietLife.Constants where
 
 import Prelude
 
+import Data.Maybe (isJust)
+import Data.String (Pattern(..), stripPrefix)
 import QualifiedDo.Semigroup as S
+import Record as Record
+import Type.Proxy (Proxy(..))
 
 type LogDefinition =
   { namespace ∷ String, name ∷ String, logSuffix ∷ String, woodSuffix ∷ String }
+
+toStrippedLog ∷ LogDefinition → LogDefinition
+toStrippedLog = Record.modify (Proxy ∷ _ "name") ("stripped_" <> _)
+
+isStripped ∷ LogDefinition → Boolean
+isStripped { name } = isJust $ stripPrefix (Pattern "stripped_") name
 
 existingLogs ∷ Array LogDefinition
 existingLogs = S.do
@@ -28,4 +38,7 @@ newLogs = S.do
     }
 
 allLogs ∷ Array LogDefinition
-allLogs = existingLogs <> newLogs
+allLogs = existingLogs {- <> newLogs -}
+
+allLogsWithStripped ∷ Array LogDefinition
+allLogsWithStripped = allLogs >>= \x → [ x, toStrippedLog x ]

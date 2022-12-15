@@ -1,8 +1,0 @@
-{
-	"parent": "quiet_life:hollow_log",
-	"textures": {
-		"side": "minecraft:jungle_log",
-		"inside": "minecraft:stripped_jungle_log",
-		"end": "minecraft:jungle_log_top"
-	}
-}

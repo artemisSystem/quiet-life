@@ -1,9 +1,400 @@
-block "test_block" {
+block "hollow_oak_log" {
 	type "custom" {
-		pistonBehavior "destroy"
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
 	}
-	settings material="wood" {
-		hardness 0.2
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_stripped_oak_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
 	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_spruce_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_stripped_spruce_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_birch_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_stripped_birch_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_jungle_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_stripped_jungle_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_dark_oak_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_stripped_dark_oak_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_acacia_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_stripped_acacia_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_warped_stem" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_stripped_warped_stem" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_crimson_stem" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_stripped_crimson_stem" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_livingwood_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_stripped_livingwood_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_dreamwood_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
+	item
+}
+block "hollow_stripped_dreamwood_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="minecraft:oak_log"
 	item
 }

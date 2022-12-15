@@ -13,7 +13,7 @@ import Foreign (Foreign, ForeignError(..), FT, fail)
 import Foreign.Object (Object, delete, lookup)
 import Foreign.ReadWrite (class ReadForeign, class WriteForeign, readForeign, writeForeign)
 import Lib.Json (unsafeFormatJson)
-import Lib.Serializer (class IsDataType, class Serializable, getFileExtension)
+import Lib.Serializer (class IsDataType, class Serializable)
 import Record (disjointUnion)
 
 alt ∷ ∀ m a. Monad m ⇒ FT m a → FT m a → FT m a

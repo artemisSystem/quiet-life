@@ -1,8 +1,0 @@
-{
-	"parent": "quiet_life:hollow_log",
-	"textures": {
-		"side": "kdlycontent:brown_mushroom_stem",
-		"inside": "kdlycontent:stripped_brown_mushroom_stem",
-		"end": "kdlycontent:brown_mushroom_stem_top"
-	}
-}

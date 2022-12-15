@@ -2,97 +2,81 @@ module Lib.Serializer where
 
 import Prelude
 
-import Data.Foldable (for_)
-import Data.Newtype (class Newtype)
-import Data.Reflectable (class Reflectable, reflectType)
-import Effect.Aff (Aff)
+import Data.FoldableWithIndex (forWithIndex_)
+import Data.Map (SemigroupMap)
+import Data.Semigroup.First (First(..))
+import Data.Symbol (class IsSymbol)
+import Data.Tuple (Tuple(..))
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (mkdir', writeTextFile)
 import Node.FS.Perms (all, mkPerms, read)
-import Node.Path (FilePath)
+import Node.Path (FilePath, dirname)
 import Node.Path as Path
+import Prim.Row as Row
+import Run (Run, AFF, liftAff)
+import Run.Writer (Writer, runWriterAt)
 import Type.Proxy (Proxy(..))
-
-data PackType
-
-foreign import data DataPack ∷ Symbol → Symbol → PackType
-foreign import data ResourcePack ∷ Symbol → Symbol → PackType
-foreign import data KdlFile ∷ PackType
-
-class IsPackType (packType ∷ PackType) where
-  getDataLocation ∷ Proxy packType → String
-
-instance
-  ( Reflectable namespace String
-  , Reflectable subdir String
-  ) ⇒
-  IsPackType (DataPack namespace subdir) where
-  getDataLocation _ = Path.concat [ "data", namespace, subdir ]
-    where
-    namespace = reflectType (Proxy ∷ _ namespace)
-    subdir = reflectType (Proxy ∷ _ subdir)
-
-instance
-  ( Reflectable namespace String
-  , Reflectable subdir String
-  ) ⇒
-  IsPackType (ResourcePack namespace subdir) where
-  getDataLocation _ = Path.concat [ "assets", namespace, subdir ]
-    where
-    namespace = reflectType (Proxy ∷ _ namespace)
-    subdir = reflectType (Proxy ∷ _ subdir)
-
-instance IsPackType KdlFile where
-  getDataLocation _ = "content"
+import Type.Row (type (+))
 
 class IsDataType (dataType ∷ Type) where
   -- | Gets the file extension the data type should be written to, without the
   -- | `.` (For example `"json"`)
   getFileExtension ∷ Proxy dataType → String
 
-newtype Serializer
-  (packType ∷ PackType)
-  (dataType ∷ Type) =
-  Serializer { path ∷ FilePath, content ∷ dataType }
-
-derive instance Newtype (Serializer dataType packType) _
-
--- | Construct a `Serializer` value
-serializer
-  ∷ ∀ packType dataType
-  . FilePath
-  → dataType
-  → Serializer packType dataType
-serializer path content = Serializer { path, content }
+instance IsDataType a ⇒ IsDataType (First a) where
+  getFileExtension _ = getFileExtension (Proxy ∷ _ a)
 
 class Serializable a where
   serialize ∷ a → String
 
+instance Serializable a ⇒ Serializable (First a) where
+  serialize (First a) = serialize a
+
 writeData
-  ∷ ∀ packType dataType
-  . IsPackType packType
-  ⇒ IsDataType dataType
+  ∷ ∀ wr r name a dataType
+  . IsDataType dataType
   ⇒ Serializable dataType
-  ⇒ FilePath
-  → Array (Serializer packType dataType)
-  → Aff Unit
-writeData packRoot serializers = do
-  let
-    dataLocation = getDataLocation (Proxy ∷ _ packType)
-    extension = "." <> getFileExtension (Proxy ∷ _ dataType)
-    destinationFolder = Path.concat [ packRoot, dataLocation ]
-  mkdir' destinationFolder { recursive: true, mode: mkPerms all read read }
-  for_ serializers \(Serializer { path, content }) → do
+  ⇒ IsSymbol name
+  ⇒ Row.Cons name (Writer (SemigroupMap String dataType)) (AFF + r) (AFF + wr)
+  ⇒ Monoid (SemigroupMap String dataType)
+  ⇒ Proxy name
+  → FilePath
+  → Run (AFF + wr) a
+  → Run (AFF + r) a
+writeData proxy destinationFolder m = do
+  let extension = "." <> getFileExtension (Proxy ∷ _ dataType)
+  Tuple files a ← runWriterAt proxy m
+  a <$ forWithIndex_ files \path content → liftAff do
     let stringContent = serialize content
-    writeTextFile UTF8 (Path.concat [ destinationFolder, path <> extension ])
+    mkdir $ dirname (Path.concat [ destinationFolder, path <> extension ])
+    writeTextFile UTF8
+      (Path.concat [ destinationFolder, path <> extension ])
       stringContent
+  where
+  mkdir folder = mkdir' folder { recursive: true, mode: mkPerms all read read }
 
 writeDatum
-  ∷ ∀ packType dataType
-  . IsPackType packType
-  ⇒ IsDataType dataType
+  ∷ ∀ wr r name a dataType
+  . IsDataType dataType
   ⇒ Serializable dataType
-  ⇒ FilePath
-  → Serializer packType dataType
-  → Aff Unit
-writeDatum path theSerializer = writeData path [ theSerializer ]
+  ⇒ IsSymbol name
+  ⇒ Row.Cons name (Writer dataType) (AFF + r) (AFF + wr)
+  ⇒ Monoid dataType
+  ⇒ Proxy name
+  → FilePath
+  → String
+  → Run (AFF + wr) a
+  → Run (AFF + r) a
+writeDatum proxy destinationFolder path m = do
+  Tuple content a ← runWriterAt proxy m
+  let
+    extension = "." <> getFileExtension (Proxy ∷ _ dataType)
+    stringContent = serialize content
+  liftAff do
+    mkdir $ dirname (Path.concat [ destinationFolder, path <> extension ])
+    writeTextFile UTF8
+      (Path.concat [ destinationFolder, path <> extension ])
+      stringContent
+  pure a
+  where
+  mkdir folder = mkdir' folder { recursive: true, mode: mkPerms all read read }

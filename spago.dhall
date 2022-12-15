@@ -2,8 +2,6 @@
 , dependencies =
   [ "aff"
   , "arrays"
-  , "console"
-  , "control"
   , "debug"
   , "effect"
   , "either"
@@ -11,18 +9,23 @@
   , "foreign"
   , "foreign-object"
   , "foreign-readwrite"
-  , "lists"
+  , "integers"
   , "maybe"
   , "newtype"
   , "node-buffer"
   , "node-fs"
   , "node-fs-aff"
   , "node-path"
+  , "ordered-collections"
   , "prelude"
   , "qualified-do"
   , "record"
+  , "run"
+  , "safe-coerce"
   , "strings"
   , "transformers"
+  , "tuples"
+  , "typelevel-prelude"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs" ]

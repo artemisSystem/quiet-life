@@ -9,22 +9,28 @@ module Lib.Kdl
   , node
   , appendChild
   , appendChildren
+  , appendChildren'
+  , unfoldChildren
 
   , class IsKdlValue
   , toKdlValue
 
   , appendProp
   , appendValue
+  , appendValues
   ) where
 
 import Prelude
 
+import Data.Int (toNumber)
 import Data.Newtype (class Newtype)
 import Foreign (Foreign)
 import Foreign.Object (Object, insert)
 import Foreign.Object as Object
 import Foreign.ReadWrite (class WriteForeign, writeForeign)
 import Lib.Serializer (class IsDataType, class Serializable)
+import QualifiedDo.Statements (class Convert, Statements)
+import QualifiedDo.Unfoldable as U
 import Record (disjointUnion)
 
 foreign import null_ ∷ Foreign
@@ -90,6 +96,22 @@ appendChildren ∷ Kdl → KdlNode → KdlNode
 appendChildren childrenToAdd parent@{ children } = parent
   { children = children <> childrenToAdd }
 
+appendChildren' ∷ Array KdlNode → KdlNode → KdlNode
+appendChildren' = Kdl >>> appendChildren
+
+-- | For use with QualifiedDo.Unfoldable.do. Example:
+-- |
+-- | ```purescript
+-- | import QualifiedDo.Unfoldable as U
+-- |
+-- | myKdlNode :: KdlNode
+-- | myKdlNode = node "nodeName" # unfoldChildren U.do
+-- |   node "A"
+-- |   node "B"
+-- | ```
+unfoldChildren ∷ ∀ a. Convert a (Statements KdlNode) ⇒ a → KdlNode → KdlNode
+unfoldChildren = appendChildren' <<< U.unfold
+
 appendChild ∷ KdlNode → KdlNode → KdlNode
 appendChild child = appendChildren (Kdl [ child ])
 
@@ -102,6 +124,9 @@ instance IsKdlValue String where
 instance IsKdlValue Number where
   toKdlValue = KdlNumber
 
+instance IsKdlValue Int where
+  toKdlValue = toNumber >>> toKdlValue
+
 instance IsKdlValue Boolean where
   toKdlValue = KdlBoolean
 
@@ -113,5 +138,8 @@ appendProp key value kdlNode@{ properties } = kdlNode
   { properties = properties # insert key (toKdlValue value) }
 
 appendValue ∷ ∀ value. IsKdlValue value ⇒ value → KdlNode → KdlNode
-appendValue value kdlNode@{ values } = kdlNode
-  { values = values <> [ toKdlValue value ] }
+appendValue value = appendValues [ value ]
+
+appendValues ∷ ∀ value. IsKdlValue value ⇒ Array value → KdlNode → KdlNode
+appendValues newValues kdlNode@{ values } = kdlNode
+  { values = values <> (toKdlValue <$> newValues) }
