@@ -12,3 +12,4 @@
 !/core_assets/
 !/.vscode
 !/deploy.sh
+!/.gitattributes
