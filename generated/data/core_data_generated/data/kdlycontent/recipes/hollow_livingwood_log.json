@@ -1,0 +1,16 @@
+{
+	"pattern": [
+		"# #",
+		"# #"
+	],
+	"key": {
+		"#": {
+			"item": "botania:livingwood_log"
+		}
+	},
+	"result": {
+		"count": 4,
+		"item": "kdlycontent:hollow_livingwood_log"
+	},
+	"type": "crafting_shaped"
+}

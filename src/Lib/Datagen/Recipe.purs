@@ -16,11 +16,11 @@ instance IsDataType (Recipe id fields) where
 
 instance
   ( Reflectable id String
-  , WriteForeign { id ∷ String | fields }
+  , WriteForeign { type ∷ String | fields }
   ) ⇒
   WriteForeign (Recipe id fields) where
   writeForeign (Recipe recipe) = recipe
-    # union { id }
+    # union { type: id }
     # writeForeign
     where
     id = reflectType (Proxy ∷ _ id)

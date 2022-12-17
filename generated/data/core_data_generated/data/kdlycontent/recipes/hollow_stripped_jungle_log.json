@@ -1,0 +1,16 @@
+{
+	"pattern": [
+		"# #",
+		"# #"
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:stripped_jungle_log"
+		}
+	},
+	"result": {
+		"count": 4,
+		"item": "kdlycontent:hollow_stripped_jungle_log"
+	},
+	"type": "crafting_shaped"
+}

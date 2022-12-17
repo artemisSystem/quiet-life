@@ -1,0 +1,16 @@
+{
+	"pattern": [
+		"# #",
+		"# #"
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:dark_oak_log"
+		}
+	},
+	"result": {
+		"count": 4,
+		"item": "kdlycontent:hollow_dark_oak_log"
+	},
+	"type": "crafting_shaped"
+}

@@ -1,0 +1,16 @@
+{
+	"pattern": [
+		"# #",
+		"# #"
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:jungle_log"
+		}
+	},
+	"result": {
+		"count": 4,
+		"item": "kdlycontent:hollow_jungle_log"
+	},
+	"type": "crafting_shaped"
+}

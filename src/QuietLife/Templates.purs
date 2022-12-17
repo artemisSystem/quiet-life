@@ -11,10 +11,11 @@ import Lib.Datagen.KdlyContent.Block (block, box)
 import Lib.Datagen.Lang (Lang, simpleLangName)
 import Lib.Datagen.Model (Model, itemModel)
 import Lib.Datagen.Model as Model
+import Lib.Datagen.Recipe (CraftingResult(..), Ingredient(..), Recipe(..), SingleIngredient(..))
 import Lib.Datagen.Recipe.ShapedCrafting (ShapedCraftingRecipe)
 import Lib.Kdl (Kdl, KdlNode, appendProp, appendValue, node, unfoldChildren)
 import Lib.Kdl as Kdl
-import Lib.Util ((/), toSMap)
+import Lib.Util (toSMap, (/))
 import QualifiedDo.Unfoldable as U
 import QuietLife.Constants (LogDefinition, isStripped, toStrippedLog)
 import Run (Run)
@@ -99,6 +100,20 @@ hollowLogModels log = Map.empty
   texture { namespace, name, logSuffix } =
     namespace <> ":block/" <> name <> "_" <> logSuffix
 
+hollowLogRecipe
+  ∷ LogDefinition → ShapedCraftingRecipe
+hollowLogRecipe log = Recipe
+  { pattern:
+      [ "# #"
+      , "# #"
+      ]
+  , key: Object.singleton "#" (Single $ Item logLocation)
+  , result: CraftingResult { count: 4, item: hollowLogLocation }
+  }
+  where
+  logLocation = log.namespace <> ":" <> log.name <> "_" <> log.logSuffix
+  hollowLogLocation = "kdlycontent:" <> hollowLogName log
+
 hollowLog ∷ ∀ r. LogDefinition → Run (DefaultBlockRows r) Unit
 hollowLog log = do
   tellAt _blocks (Kdl.singleton $ hollowLogBlock log)
@@ -106,3 +121,5 @@ hollowLog log = do
     (Map.singleton (hollowLogName log) (hollowLogBlockstate log))
   tellAt _models (hollowLogModels log)
   tellAt _lang (simpleLangName (hollowLogName log))
+  tellAt _recipes $ toSMap
+    (Map.singleton (hollowLogName log) (hollowLogRecipe log))

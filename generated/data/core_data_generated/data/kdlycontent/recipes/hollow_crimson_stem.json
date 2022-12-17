@@ -1,0 +1,16 @@
+{
+	"pattern": [
+		"# #",
+		"# #"
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:crimson_stem"
+		}
+	},
+	"result": {
+		"count": 4,
+		"item": "kdlycontent:hollow_crimson_stem"
+	},
+	"type": "crafting_shaped"
+}
