@@ -7,11 +7,12 @@ import Data.Semigroup.First (First)
 import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Lib.Datagen.PackMcMeta (PackMcMeta, dataMcmeta, resourceMcmeta)
+import Lib.Datagen.Tag (writeTags)
 import Lib.Serializer (writeData, writeDatum)
 import Lib.Util ((/))
 import Node.FS.Aff (rm')
 import QuietLife.Blocks as Blocks
-import QuietLife.Templates (_blocks, _blockstates, _lang, _models, _recipes)
+import QuietLife.Templates (_block_tags, _blocks, _blockstates, _lang, _models, _recipes)
 import Run (Run, runBaseAff)
 import Run.Writer (Writer, tellAt)
 import Type.Proxy (Proxy(..))
@@ -41,6 +42,7 @@ main = launchAff_ do
     # writeData _models (assets / "kdlycontent" / "models")
     # writeDatum _lang (assets / "kdlycontent" / "lang") "en_us"
     # writeData _recipes (data_ / "kdlycontent" / "recipes")
+    # writeTags _block_tags data_ "blocks"
     # runBaseAff
   where
   resourcePackLocation = "generated" / "resources" / "core_assets_generated"

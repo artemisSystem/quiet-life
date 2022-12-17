@@ -1,0 +1,27 @@
+{
+	"replace": false,
+	"values": [
+		"kdlycontent:hollow_oak_log",
+		"kdlycontent:hollow_stripped_oak_log",
+		"kdlycontent:hollow_spruce_log",
+		"kdlycontent:hollow_stripped_spruce_log",
+		"kdlycontent:hollow_birch_log",
+		"kdlycontent:hollow_stripped_birch_log",
+		"kdlycontent:hollow_jungle_log",
+		"kdlycontent:hollow_stripped_jungle_log",
+		"kdlycontent:hollow_dark_oak_log",
+		"kdlycontent:hollow_stripped_dark_oak_log",
+		"kdlycontent:hollow_acacia_log",
+		"kdlycontent:hollow_stripped_acacia_log",
+		"kdlycontent:hollow_mangrove_log",
+		"kdlycontent:hollow_stripped_mangrove_log",
+		"kdlycontent:hollow_warped_stem",
+		"kdlycontent:hollow_stripped_warped_stem",
+		"kdlycontent:hollow_crimson_stem",
+		"kdlycontent:hollow_stripped_crimson_stem",
+		"kdlycontent:hollow_livingwood_log",
+		"kdlycontent:hollow_stripped_livingwood_log",
+		"kdlycontent:hollow_dreamwood_log",
+		"kdlycontent:hollow_stripped_dreamwood_log"
+	]
+}

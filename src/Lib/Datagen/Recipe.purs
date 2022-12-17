@@ -31,16 +31,16 @@ instance
   serialize recipe = unsafeFormatJson (writeForeign recipe)
 
 data SingleIngredient
-  = Tag String
-  | Item String
+  = TagIngredient String
+  | ItemIngredient String
 
 data Ingredient
   = Single SingleIngredient
   | Multiple (Array Ingredient)
 
 instance WriteForeign Ingredient where
-  writeForeign (Single (Tag tag)) = writeForeign { tag }
-  writeForeign (Single (Item item)) = writeForeign { item }
+  writeForeign (Single (TagIngredient tag)) = writeForeign { tag }
+  writeForeign (Single (ItemIngredient item)) = writeForeign { item }
   writeForeign (Multiple array) = writeForeign array
 
 newtype CraftingResult = CraftingResult

@@ -13,9 +13,12 @@ import Lib.Datagen.Model (Model, itemModel)
 import Lib.Datagen.Model as Model
 import Lib.Datagen.Recipe (CraftingResult(..), Ingredient(..), Recipe(..), SingleIngredient(..))
 import Lib.Datagen.Recipe.ShapedCrafting (ShapedCraftingRecipe)
+import Lib.Datagen.ResourceLocation ((:))
+import Lib.Datagen.Tag (TagCollection, singleEntry)
 import Lib.Kdl (Kdl, KdlNode, appendProp, appendValue, node, unfoldChildren)
 import Lib.Kdl as Kdl
-import Lib.Util (toSMap, (/))
+import Lib.Util (tellFSingleton, toSMap, (/))
+import QualifiedDo.Semigroup as S
 import QualifiedDo.Unfoldable as U
 import QuietLife.Constants (LogDefinition, isStripped, toStrippedLog)
 import Run (Run)
@@ -28,6 +31,7 @@ type DefaultBlockRows r =
   , models ∷ Writer (SemigroupMap String (First Model))
   , lang ∷ Writer Lang
   , recipes ∷ Writer (SemigroupMap String (First ShapedCraftingRecipe))
+  , block_tags ∷ Writer TagCollection
   | r
   )
 
@@ -45,6 +49,9 @@ _lang = Proxy
 
 _recipes ∷ Proxy "recipes"
 _recipes = Proxy
+
+_block_tags ∷ Proxy "block_tags"
+_block_tags = Proxy
 
 hollowLogName ∷ LogDefinition → String
 hollowLogName log = "hollow_" <> log.name <> "_" <> log.logSuffix
@@ -107,19 +114,25 @@ hollowLogRecipe log = Recipe
       [ "# #"
       , "# #"
       ]
-  , key: Object.singleton "#" (Single $ Item logLocation)
+  , key: Object.singleton "#" (Single $ ItemIngredient logLocation)
   , result: CraftingResult { count: 4, item: hollowLogLocation }
   }
   where
   logLocation = log.namespace <> ":" <> log.name <> "_" <> log.logSuffix
   hollowLogLocation = "kdlycontent:" <> hollowLogName log
 
+hollowLogTags ∷ LogDefinition → TagCollection
+hollowLogTags log = S.do
+  singleEntry ("minecraft" : "climbable") logLoc
+  singleEntry ("minecraft" : "mineable/axe") logLoc
+  where
+  logLoc = "kdlycontent" : hollowLogName log
+
 hollowLog ∷ ∀ r. LogDefinition → Run (DefaultBlockRows r) Unit
 hollowLog log = do
   tellAt _blocks (Kdl.singleton $ hollowLogBlock log)
-  tellAt _blockstates $ toSMap
-    (Map.singleton (hollowLogName log) (hollowLogBlockstate log))
+  tellFSingleton _blockstates (hollowLogName log) (hollowLogBlockstate log)
   tellAt _models (hollowLogModels log)
   tellAt _lang (simpleLangName (hollowLogName log))
-  tellAt _recipes $ toSMap
-    (Map.singleton (hollowLogName log) (hollowLogRecipe log))
+  tellFSingleton _recipes (hollowLogName log) (hollowLogRecipe log)
+  tellAt _block_tags (hollowLogTags log)
