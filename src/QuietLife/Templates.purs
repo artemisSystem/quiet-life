@@ -22,7 +22,7 @@ import Lib.Kdl as Kdl
 import Lib.Util (tellFSingleton, toSMap, (/))
 import QualifiedDo.Semigroup as S
 import QualifiedDo.Unfoldable as U
-import QuietLife.Constants (LogDefinition, isStripped, toStrippedLog)
+import QuietLife.Constants (LogDefinition, getLogsTagLocation, isStripped, toStrippedLog)
 import Run (Run)
 import Run.Writer (Writer, tellAt)
 import Type.Proxy (Proxy(..))
@@ -54,6 +54,9 @@ _recipes = Proxy
 
 _block_tags ∷ Proxy "block_tags"
 _block_tags = Proxy
+
+_item_tags ∷ Proxy "item_tags"
+_item_tags = Proxy
 
 hollowLogName ∷ LogDefinition → String
 hollowLogName log = "hollow_" <> log.name <> "_" <> log.logSuffix
@@ -129,7 +132,7 @@ hollowLogRecipe log = Recipe
 hollowLogTags ∷ LogDefinition → TagCollection
 hollowLogTags log = S.do
   singleEntry ("minecraft" : "climbable") logLoc
-  singleEntry ("minecraft" : "mineable/axe") logLoc
+  singleEntry (getLogsTagLocation log) logLoc
   where
   logLoc = "kdlycontent" : hollowLogName log
 

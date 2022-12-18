@@ -5,6 +5,7 @@ import Prelude
 import Data.Maybe (isJust)
 import Data.String (Pattern(..), Replacement(..), stripPrefix)
 import Data.String as String
+import Lib.Datagen.ResourceLocation (ResourceLocation, (:))
 import QualifiedDo.Semigroup as S
 import Record as Record
 import Type.Proxy (Proxy(..))
@@ -29,6 +30,10 @@ toStrippedLog = Record.modify (Proxy ∷ _ "name") \name →
     name
   else ("stripped_" <> name)
 
+toUnStrippedLog ∷ LogDefinition → LogDefinition
+toUnStrippedLog = Record.modify (Proxy ∷ _ "name")
+  (String.replace (Pattern "stripped_") (Replacement ""))
+
 isStripped ∷ LogDefinition → Boolean
 isStripped { name } = isJust $ stripPrefix (Pattern "stripped_") name
 
@@ -47,8 +52,9 @@ newLogs = S.do
   [ "red_mushroom", "brown_mushroom" ] <#>
     logTemplate "kdlycontent" "stem" "hyphae" "stems"
 
-getTagName ∷ String → String → String
-getTagName suffix name = name <> "_" <> suffix
+getLogsTagLocation ∷ LogDefinition → ResourceLocation
+getLogsTagLocation log =
+  (log.namespace : (toUnStrippedLog log).name <> "_" <> log.tagSuffix)
 
 allLogs ∷ Array LogDefinition
 allLogs = existingLogs {- <> newLogs -}
