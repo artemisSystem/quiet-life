@@ -12,7 +12,7 @@ import Lib.Serializer (writeData, writeDatum)
 import Lib.Util ((/))
 import Node.FS.Aff (rm')
 import QuietLife.Blocks as Blocks
-import QuietLife.Templates (_block_tags, _blocks, _blockstates, _lang, _models, _recipes)
+import QuietLife.Templates (_block_tags, _blocks, _blockstates, _item_tags, _lang, _models, _recipes)
 import Run (Run, runBaseAff)
 import Run.Writer (Writer, tellAt)
 import Type.Proxy (Proxy(..))
@@ -43,6 +43,7 @@ main = launchAff_ do
     # writeDatum _lang (assets / "kdlycontent" / "lang") "en_us"
     # writeData _recipes (data_ / "kdlycontent" / "recipes")
     # writeTags _block_tags data_ "blocks"
+    # writeTags _item_tags data_ "items"
     # runBaseAff
   where
   resourcePackLocation = "generated" / "resources" / "core_assets_generated"

@@ -34,6 +34,7 @@ type DefaultBlockRows r =
   , lang ∷ Writer Lang
   , recipes ∷ Writer (SemigroupMap String (First ShapedCraftingRecipe))
   , block_tags ∷ Writer TagCollection
+  , item_tags ∷ Writer TagCollection
   | r
   )
 
@@ -129,10 +130,18 @@ hollowLogRecipe log = Recipe
   logLocation = log.namespace <> ":" <> log.name <> "_" <> log.logSuffix
   hollowLogLocation = "kdlycontent:" <> hollowLogName log
 
-hollowLogTags ∷ LogDefinition → TagCollection
-hollowLogTags log = S.do
-  singleEntry ("minecraft" : "climbable") logLoc
-  singleEntry (getLogsTagLocation log) logLoc
+hollowLogTags
+  ∷ ∀ r
+  . LogDefinition
+  → Run
+      (block_tags ∷ Writer TagCollection, item_tags ∷ Writer TagCollection | r)
+      Unit
+hollowLogTags log = do
+  tellAt _block_tags S.do
+    singleEntry ("minecraft" : "climbable") logLoc
+    singleEntry (getLogsTagLocation log) logLoc
+  tellAt _item_tags S.do
+    singleEntry (getLogsTagLocation log) logLoc
   where
   logLoc = "kdlycontent" : hollowLogName log
 
@@ -143,4 +152,4 @@ hollowLog log = do
   tellAt _models (hollowLogModels log)
   tellAt _lang (simpleLangName (hollowLogName log))
   tellFSingleton _recipes (hollowLogName log) (hollowLogRecipe log)
-  tellAt _block_tags (hollowLogTags log)
+  hollowLogTags log
