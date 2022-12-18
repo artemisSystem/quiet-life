@@ -2,8 +2,7 @@ module QuietLife.Constants where
 
 import Prelude
 
-import Data.Maybe (isJust)
-import Data.String (Pattern(..), Replacement(..), stripPrefix)
+import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Lib.Datagen.ResourceLocation (ResourceLocation, (:))
 import QualifiedDo.Semigroup as S
