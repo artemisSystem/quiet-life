@@ -35,7 +35,7 @@ toUnStrippedLog = Record.modify (Proxy ∷ _ "name")
   (String.replace (Pattern "stripped_") (Replacement ""))
 
 isStripped ∷ LogDefinition → Boolean
-isStripped { name } = isJust $ stripPrefix (Pattern "stripped_") name
+isStripped { name } = String.contains (Pattern "stripped_") name
 
 existingLogs ∷ Array LogDefinition
 existingLogs = S.do
