@@ -43,6 +43,7 @@ existingLogs = S.do
   [ "warped", "crimson" ] <#> logTemplate "minecraft" "stem" "hyphae" "stems"
   [ "livingwood", "glimmering_livingwood", "dreamwood", "glimmering_dreamwood" ]
     <#> logTemplate "botania" "log" "wood" "logs"
+  [ "edified" ] <#> logTemplate "hexcasting" "log" "wood" "logs"
 
 newLogs ∷ Array LogDefinition
 newLogs = S.do

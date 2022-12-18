@@ -1,0 +1,16 @@
+{
+	"pattern": [
+		"# #",
+		"# #"
+	],
+	"key": {
+		"#": {
+			"item": "hexcasting:edified_log"
+		}
+	},
+	"result": {
+		"count": 4,
+		"item": "kdlycontent:hollow_edified_log"
+	},
+	"type": "crafting_shaped"
+}

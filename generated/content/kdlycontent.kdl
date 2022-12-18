@@ -518,3 +518,43 @@ block "hollow_glimmering_stripped_dreamwood_log" {
 	settings copy="botania:glimmering_stripped_dreamwood_log"
 	item
 }
+block "hollow_edified_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="hexcasting:edified_log"
+	item
+}
+block "hollow_stripped_edified_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="hexcasting:stripped_edified_log"
+	item
+}

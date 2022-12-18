@@ -26,6 +26,8 @@
 		"kdlycontent:hollow_dreamwood_log",
 		"kdlycontent:hollow_stripped_dreamwood_log",
 		"kdlycontent:hollow_glimmering_dreamwood_log",
-		"kdlycontent:hollow_glimmering_stripped_dreamwood_log"
+		"kdlycontent:hollow_glimmering_stripped_dreamwood_log",
+		"kdlycontent:hollow_edified_log",
+		"kdlycontent:hollow_stripped_edified_log"
 	]
 }
