@@ -139,6 +139,7 @@ hollowLogTags
 hollowLogTags log = do
   tellAt _block_tags S.do
     singleEntry ("minecraft" : "climbable") logLoc
+    -- todo: hexcasting does not add #hexcasting:edified_logs to #mineable/axe
     singleEntry (getLogsTagLocation log) logLoc
   tellAt _item_tags S.do
     singleEntry (getLogsTagLocation log) logLoc
