@@ -21,7 +21,11 @@
 		"kdlycontent:hollow_stripped_crimson_stem",
 		"kdlycontent:hollow_livingwood_log",
 		"kdlycontent:hollow_stripped_livingwood_log",
+		"kdlycontent:hollow_glimmering_livingwood_log",
+		"kdlycontent:hollow_glimmering_stripped_livingwood_log",
 		"kdlycontent:hollow_dreamwood_log",
-		"kdlycontent:hollow_stripped_dreamwood_log"
+		"kdlycontent:hollow_stripped_dreamwood_log",
+		"kdlycontent:hollow_glimmering_dreamwood_log",
+		"kdlycontent:hollow_glimmering_stripped_dreamwood_log"
 	]
 }

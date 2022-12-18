@@ -3,7 +3,8 @@ module QuietLife.Constants where
 import Prelude
 
 import Data.Maybe (isJust)
-import Data.String (Pattern(..), stripPrefix)
+import Data.String (Pattern(..), Replacement(..), stripPrefix)
+import Data.String as String
 import QualifiedDo.Semigroup as S
 import Record as Record
 import Type.Proxy (Proxy(..))
@@ -21,17 +22,23 @@ logTemplate namespace logSuffix woodSuffix tagSuffix name =
   { namespace, logSuffix, woodSuffix, tagSuffix, name }
 
 toStrippedLog ∷ LogDefinition → LogDefinition
-toStrippedLog = Record.modify (Proxy ∷ _ "name") ("stripped_" <> _)
+toStrippedLog = Record.modify (Proxy ∷ _ "name") \name →
+  if String.contains (Pattern "glimmering_") name then String.replace
+    (Pattern "glimmering_")
+    (Replacement "glimmering_stripped_")
+    name
+  else ("stripped_" <> name)
 
 isStripped ∷ LogDefinition → Boolean
 isStripped { name } = isJust $ stripPrefix (Pattern "stripped_") name
 
 existingLogs ∷ Array LogDefinition
 existingLogs = S.do
-  [ "oak", "spruce", "birch", "jungle", "dark_oak", "acacia", "mangrove" ] <#>
-    logTemplate "minecraft" "log" "wood" "logs"
+  [ "oak", "spruce", "birch", "jungle", "dark_oak", "acacia", "mangrove" ]
+    <#> logTemplate "minecraft" "log" "wood" "logs"
   [ "warped", "crimson" ] <#> logTemplate "minecraft" "stem" "hyphae" "stems"
-  [ "livingwood", "dreamwood" ] <#> logTemplate "botania" "log" "wood" "logs"
+  [ "livingwood", "glimmering_livingwood", "dreamwood", "glimmering_dreamwood" ]
+    <#> logTemplate "botania" "log" "wood" "logs"
 
 newLogs ∷ Array LogDefinition
 newLogs = S.do

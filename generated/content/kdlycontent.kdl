@@ -35,7 +35,7 @@ block "hollow_stripped_oak_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:stripped_oak_log"
 	item
 }
 block "hollow_spruce_log" {
@@ -55,7 +55,7 @@ block "hollow_spruce_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:spruce_log"
 	item
 }
 block "hollow_stripped_spruce_log" {
@@ -75,7 +75,7 @@ block "hollow_stripped_spruce_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:stripped_spruce_log"
 	item
 }
 block "hollow_birch_log" {
@@ -95,7 +95,7 @@ block "hollow_birch_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:birch_log"
 	item
 }
 block "hollow_stripped_birch_log" {
@@ -115,7 +115,7 @@ block "hollow_stripped_birch_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:stripped_birch_log"
 	item
 }
 block "hollow_jungle_log" {
@@ -135,7 +135,7 @@ block "hollow_jungle_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:jungle_log"
 	item
 }
 block "hollow_stripped_jungle_log" {
@@ -155,7 +155,7 @@ block "hollow_stripped_jungle_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:stripped_jungle_log"
 	item
 }
 block "hollow_dark_oak_log" {
@@ -175,7 +175,7 @@ block "hollow_dark_oak_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:dark_oak_log"
 	item
 }
 block "hollow_stripped_dark_oak_log" {
@@ -195,7 +195,7 @@ block "hollow_stripped_dark_oak_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:stripped_dark_oak_log"
 	item
 }
 block "hollow_acacia_log" {
@@ -215,7 +215,7 @@ block "hollow_acacia_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:acacia_log"
 	item
 }
 block "hollow_stripped_acacia_log" {
@@ -235,7 +235,7 @@ block "hollow_stripped_acacia_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:stripped_acacia_log"
 	item
 }
 block "hollow_mangrove_log" {
@@ -255,7 +255,7 @@ block "hollow_mangrove_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:mangrove_log"
 	item
 }
 block "hollow_stripped_mangrove_log" {
@@ -275,7 +275,7 @@ block "hollow_stripped_mangrove_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:stripped_mangrove_log"
 	item
 }
 block "hollow_warped_stem" {
@@ -295,7 +295,7 @@ block "hollow_warped_stem" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:warped_stem"
 	item
 }
 block "hollow_stripped_warped_stem" {
@@ -315,7 +315,7 @@ block "hollow_stripped_warped_stem" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:stripped_warped_stem"
 	item
 }
 block "hollow_crimson_stem" {
@@ -335,7 +335,7 @@ block "hollow_crimson_stem" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:crimson_stem"
 	item
 }
 block "hollow_stripped_crimson_stem" {
@@ -355,7 +355,7 @@ block "hollow_stripped_crimson_stem" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="minecraft:stripped_crimson_stem"
 	item
 }
 block "hollow_livingwood_log" {
@@ -375,7 +375,7 @@ block "hollow_livingwood_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="botania:livingwood_log"
 	item
 }
 block "hollow_stripped_livingwood_log" {
@@ -395,7 +395,47 @@ block "hollow_stripped_livingwood_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="botania:stripped_livingwood_log"
+	item
+}
+block "hollow_glimmering_livingwood_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="botania:glimmering_livingwood_log"
+	item
+}
+block "hollow_glimmering_stripped_livingwood_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="botania:glimmering_stripped_livingwood_log"
 	item
 }
 block "hollow_dreamwood_log" {
@@ -415,7 +455,7 @@ block "hollow_dreamwood_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="botania:dreamwood_log"
 	item
 }
 block "hollow_stripped_dreamwood_log" {
@@ -435,6 +475,46 @@ block "hollow_stripped_dreamwood_log" {
 			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
 		}
 	}
-	settings copy="minecraft:oak_log"
+	settings copy="botania:stripped_dreamwood_log"
+	item
+}
+block "hollow_glimmering_dreamwood_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="botania:glimmering_dreamwood_log"
+	item
+}
+block "hollow_glimmering_stripped_dreamwood_log" {
+	type "custom" {
+		properties {
+			waterloggable
+			rotation placement="side" type="axis"
+		}
+		shape {
+			box maxX=16 maxY=16 maxZ=2 minX=0 minY=0 minZ=0
+			box maxX=16 maxY=16 maxZ=16 minX=0 minY=0 minZ=14
+			box maxX=2 maxY=16 maxZ=14 minX=0 minY=0 minZ=2
+			box maxX=16 maxY=16 maxZ=14 minX=14 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=3 minX=2 minY=0 minZ=2
+			box maxX=14 maxY=16 maxZ=3 minX=13 minY=0 minZ=2
+			box maxX=3 maxY=16 maxZ=14 minX=2 minY=0 minZ=13
+			box maxX=14 maxY=16 maxZ=14 minX=13 minY=0 minZ=13
+		}
+	}
+	settings copy="botania:glimmering_stripped_dreamwood_log"
 	item
 }

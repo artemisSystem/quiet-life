@@ -5,6 +5,8 @@ import Prelude hiding ((/))
 import Data.Map (SemigroupMap)
 import Data.Map as Map
 import Data.Semigroup.First (First)
+import Data.String (Pattern(..), Replacement(..))
+import Data.String as String
 import Foreign.Object as Object
 import Lib.Datagen.Blockstate (Blockstate(..), Rotation(..), rotatedVariant)
 import Lib.Datagen.KdlyContent.Block (block, box)
@@ -73,8 +75,10 @@ hollowLogBlock log = block (hollowLogName log) # unfoldChildren U.do
       box 13 0 2 14 16 3
       box 2 0 13 3 16 14
       box 13 0 13 14 16 14
-  node "settings" # appendProp "copy" "minecraft:oak_log"
+  node "settings" # appendProp "copy" logResourceLocation
   node "item"
+  where
+  logResourceLocation = log.namespace <> ":" <> log.name <> "_" <> log.logSuffix
 
 hollowLogBlockstate ∷ LogDefinition → Blockstate
 hollowLogBlockstate log = Object.empty
@@ -98,7 +102,8 @@ hollowLogModels log = Map.empty
   # toSMap
   where
   model template = Model.hollowPillar template
-    { end: texture log <> "_top"
+    { end: String.replace (Pattern "glimmering_") (Replacement "") $
+        texture log <> "_top"
     , inside:
         if isStripped log then texture log
         else texture (toStrippedLog log)

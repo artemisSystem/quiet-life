@@ -1,0 +1,8 @@
+{
+	"parent": "quiet_life:block/templates/hollow_log",
+	"textures": {
+		"side": "botania:block/glimmering_dreamwood_log",
+		"inside": "botania:block/glimmering_stripped_dreamwood_log",
+		"end": "botania:block/dreamwood_log_top"
+	}
+}
