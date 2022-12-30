@@ -1,0 +1,17 @@
+{
+	"replace": false,
+	"values": [
+		"botania:manasteel_axe",
+		"botania:manasteel_pick",
+		"botania:manasteel_hoe",
+		"botania:manasteel_shears",
+		"botania:manasteel_shovel",
+		"botania:manasteel_sword",
+		"botania:elementium_axe",
+		"botania:elementium_pickaxe",
+		"botania:elementium_hoe",
+		"botania:elementium_shears",
+		"botania:elementium_shovel",
+		"botania:elementium_sword"
+	]
+}

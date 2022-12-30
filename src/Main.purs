@@ -12,6 +12,7 @@ import Lib.Serializer (writeData, writeDatum)
 import Lib.Util ((/))
 import Node.FS.Aff (rm')
 import QuietLife.Blocks as Blocks
+import QuietLife.Tags as Tags
 import QuietLife.Templates (_block_tags, _blocks, _blockstates, _item_tags, _lang, _models, _recipes)
 import Run (Run, runBaseAff)
 import Run.Writer (Writer, tellAt)
@@ -34,7 +35,7 @@ main ∷ Effect Unit
 main = launchAff_ do
   rm' "generated"
     { recursive: true, force: true, maxRetries: 0, retryDelay: 100 }
-  Blocks.newBlocks *> mcmeta
+  Blocks.newBlocks *> Tags.newTags *> mcmeta
     # writeData _resource_mcmeta resourcePackLocation
     # writeData _data_mcmeta dataPackLocation
     # writeDatum _blocks ("generated" / "content") "kdlycontent"
