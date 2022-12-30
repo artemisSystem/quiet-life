@@ -47,8 +47,8 @@ main = launchAff_ do
     # writeTags _item_tags data_ "items"
     # runBaseAff
   where
-  resourcePackLocation = "generated" / "resources" / "core_assets_generated"
-  dataPackLocation = "generated" / "data" / "core_data_generated"
+  resourcePackLocation = "generated" / "resourcepacks" / "core_assets_generated"
+  dataPackLocation = "generated" / "datapacks" / "core_data_generated"
   assets = resourcePackLocation / "assets"
   data_ = dataPackLocation / "data"
 
