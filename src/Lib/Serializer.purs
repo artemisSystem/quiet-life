@@ -3,17 +3,19 @@ module Lib.Serializer where
 import Prelude
 
 import Data.FoldableWithIndex (forWithIndex_)
-import Data.Map (SemigroupMap)
 import Data.Semigroup.First (First(..))
 import Data.Symbol (class IsSymbol)
 import Data.Tuple (Tuple(..))
+import Effect.Class (liftEffect)
+import Effect.Exception (throw)
+import Lib.OnlyOne (OnlyOne(..), UniqueStrMap)
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (mkdir', writeTextFile)
 import Node.FS.Perms (all, mkPerms, read)
 import Node.Path (FilePath, dirname)
 import Node.Path as Path
 import Prim.Row as Row
-import Run (Run, AFF, liftAff)
+import Run (AFF, Run, liftAff)
 import Run.Writer (Writer, runWriterAt)
 import Type.Proxy (Proxy(..))
 import Type.Row (type (+))
@@ -37,8 +39,7 @@ writeData
   . IsDataType dataType
   ⇒ Serializable dataType
   ⇒ IsSymbol name
-  ⇒ Row.Cons name (Writer (SemigroupMap String dataType)) (AFF + r) (AFF + wr)
-  ⇒ Monoid (SemigroupMap String dataType)
+  ⇒ Row.Cons name (Writer (UniqueStrMap dataType)) (AFF + r) (AFF + wr)
   ⇒ Proxy name
   → FilePath
   → Run (AFF + wr) a
@@ -47,11 +48,13 @@ writeData proxy destinationFolder m = do
   let extension = "." <> getFileExtension (Proxy ∷ _ dataType)
   Tuple files a ← runWriterAt proxy m
   a <$ forWithIndex_ files \path content → liftAff do
-    let stringContent = serialize content
-    mkdir $ dirname (Path.concat [ destinationFolder, path <> extension ])
-    writeTextFile UTF8
-      (Path.concat [ destinationFolder, path <> extension ])
-      stringContent
+    let filePath = (Path.concat [ destinationFolder, path <> extension ])
+    stringContent ← case content of
+      One content' → pure (serialize content')
+      MoreThanOne _ → liftEffect $ throw $
+        "Attempted to write multiple resources to the same file: " <> filePath
+    mkdir (dirname filePath)
+    writeTextFile UTF8 filePath stringContent
   where
   mkdir folder = mkdir' folder { recursive: true, mode: mkPerms all read read }
 

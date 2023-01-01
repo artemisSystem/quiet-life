@@ -2,14 +2,13 @@ module Main where
 
 import Prelude hiding ((/))
 
-import Data.Map (SemigroupMap)
-import Data.Semigroup.First (First)
 import Effect (Effect)
 import Effect.Aff (launchAff_)
 import Lib.Datagen.PackMcMeta (PackMcMeta, dataMcmeta, resourceMcmeta)
 import Lib.Datagen.Tag (writeTags)
+import Lib.OnlyOne (UniqueStrMap)
 import Lib.Serializer (writeData, writeDatum)
-import Lib.Util ((/))
+import Lib.Util (prettyPrintErrors, (/))
 import Node.FS.Aff (rm')
 import QuietLife.Blocks as Blocks
 import QuietLife.Tags as Tags
@@ -26,10 +25,10 @@ _data_mcmeta ∷ Proxy "data_mcmeta"
 _data_mcmeta = Proxy
 
 type ResourceMcMeta r =
-  (resource_mcmeta ∷ Writer (SemigroupMap String (First PackMcMeta)) | r)
+  (resource_mcmeta ∷ Writer (UniqueStrMap PackMcMeta) | r)
 
 type DataMcMeta r =
-  (data_mcmeta ∷ Writer (SemigroupMap String (First PackMcMeta)) | r)
+  (data_mcmeta ∷ Writer (UniqueStrMap PackMcMeta) | r)
 
 main ∷ Effect Unit
 main = launchAff_ do
@@ -46,6 +45,7 @@ main = launchAff_ do
     # writeTags _block_tags data_ "blocks"
     # writeTags _item_tags data_ "items"
     # runBaseAff
+    # prettyPrintErrors "writing resources"
   where
   resourcePackLocation = "generated" / "resourcepacks" / "core_assets_generated"
   dataPackLocation = "generated" / "datapacks" / "core_data_generated"

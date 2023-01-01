@@ -2,9 +2,7 @@ module QuietLife.Templates where
 
 import Prelude hiding ((/))
 
-import Data.Map (SemigroupMap)
 import Data.Map as Map
-import Data.Semigroup.First (First)
 import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Foreign.Object as Object
@@ -19,7 +17,8 @@ import Lib.Datagen.ResourceLocation ((:))
 import Lib.Datagen.Tag (TagCollection, singleEntry)
 import Lib.Kdl (Kdl, KdlNode, appendProp, appendValue, node, unfoldChildren)
 import Lib.Kdl as Kdl
-import Lib.Util (tellFSingleton, toSMap, (/))
+import Lib.OnlyOne (UniqueStrMap, toUMap)
+import Lib.Util (tellUSingleton, (/))
 import QualifiedDo.Semigroup as S
 import QualifiedDo.Unfoldable as U
 import QuietLife.Constants (LogDefinition, getLogsTagLocation, isStripped, toStrippedLog)
@@ -29,10 +28,10 @@ import Type.Proxy (Proxy(..))
 
 type DefaultBlockRows r =
   ( blocks ∷ Writer Kdl
-  , blockstates ∷ Writer (SemigroupMap String (First Blockstate))
-  , models ∷ Writer (SemigroupMap String (First Model))
+  , blockstates ∷ Writer (UniqueStrMap Blockstate)
+  , models ∷ Writer (UniqueStrMap Model)
   , lang ∷ Writer Lang
-  , recipes ∷ Writer (SemigroupMap String (First ShapedCraftingRecipe))
+  , recipes ∷ Writer (UniqueStrMap ShapedCraftingRecipe)
   , block_tags ∷ Writer TagCollection
   , item_tags ∷ Writer TagCollection
   | r
@@ -95,7 +94,7 @@ hollowLogBlockstate log = Object.empty
   where
   hollowLogLocation = "kdlycontent:block/" <> hollowLogName log
 
-hollowLogModels ∷ LogDefinition → SemigroupMap String (First Model)
+hollowLogModels ∷ LogDefinition → UniqueStrMap Model
 hollowLogModels log = Map.empty
   # Map.insert ("block" / hollowLogName log)
       (model "quiet_life:block/templates/hollow_log")
@@ -103,7 +102,7 @@ hollowLogModels log = Map.empty
       (model "quiet_life:block/templates/hollow_log_horizontal")
   # Map.insert ("item" / hollowLogName log)
       (itemModel ("kdlycontent:block/" <> hollowLogName log))
-  # toSMap
+  # toUMap
   where
   model template = Model.hollowPillar template
     { end: String.replace (Pattern "glimmering_") (Replacement "") $
@@ -149,8 +148,8 @@ hollowLogTags log = do
 hollowLog ∷ ∀ r. LogDefinition → Run (DefaultBlockRows r) Unit
 hollowLog log = do
   tellAt _blocks (Kdl.singleton $ hollowLogBlock log)
-  tellFSingleton _blockstates (hollowLogName log) (hollowLogBlockstate log)
+  tellUSingleton _blockstates (hollowLogName log) (hollowLogBlockstate log)
   tellAt _models (hollowLogModels log)
   tellAt _lang (simpleLangName (hollowLogName log))
-  tellFSingleton _recipes (hollowLogName log) (hollowLogRecipe log)
+  tellUSingleton _recipes (hollowLogName log) (hollowLogRecipe log)
   hollowLogTags log
