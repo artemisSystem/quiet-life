@@ -1,6 +1,7 @@
 { name = "quiet-life-datagen"
 , dependencies =
   [ "aff"
+  , "aff-promise"
   , "arrays"
   , "debug"
   , "effect"
@@ -17,6 +18,7 @@
   , "node-fs-aff"
   , "node-path"
   , "ordered-collections"
+  , "polymorphic-vectors"
   , "prelude"
   , "qualified-do"
   , "record"

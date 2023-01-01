@@ -9,7 +9,8 @@
 		"format": "purs-tidy format-in-place src"
 	},
 	"dependencies": {
-		"kdljs": "^0.1.5"
+		"kdljs": "^0.1.5",
+		"sharp": "^0.31.3"
 	},
 	"devDependencies": {
 		"purescript": "^0.15.7",
