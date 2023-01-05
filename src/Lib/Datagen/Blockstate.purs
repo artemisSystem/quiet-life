@@ -2,7 +2,7 @@ module Lib.Datagen.Blockstate where
 
 import Data.Maybe (Maybe)
 import Foreign.Object (Object)
-import Foreign.ReadWrite (class WriteForeign, Default, default, undefined, writeForeign)
+import Foreign.ReadWrite (class WriteForeign, Default(..), default, undefined, writeForeign)
 import Lib.Json (unsafeFormatJson)
 import Lib.Serializer (class IsDataType, class Serializable)
 import Prim.Boolean (False)
@@ -35,6 +35,10 @@ singleVariant model = rotatedVariant model R0 R0
 rotatedVariant ∷ String → Rotation → Rotation → VariantModels
 rotatedVariant model x y = SingleVariant
   { model, x, y, uvlock: default }
+
+rotatedVariantUvLock ∷ String → Rotation → Rotation → VariantModels
+rotatedVariantUvLock model x y = SingleVariant
+  { model, x, y, uvlock: Default true }
 
 aMultiVariant ∷ String → (SingleVariant (weight ∷ Default 1 Int))
 aMultiVariant model = rotatedMultiVariant model R0 R0

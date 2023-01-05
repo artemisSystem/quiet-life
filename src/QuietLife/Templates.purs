@@ -6,14 +6,14 @@ import Data.Map as Map
 import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Foreign.Object as Object
-import Lib.Datagen.Blockstate (Blockstate(..), Rotation(..), rotatedVariant)
+import Lib.Datagen.Blockstate (Blockstate(..), Rotation(..), VariantBlockstate, rotatedVariant, rotatedVariantUvLock, singleVariant)
 import Lib.Datagen.KdlyContent.Block (block, box)
 import Lib.Datagen.Lang (Lang, simpleLangName)
 import Lib.Datagen.Model (Model, itemModel)
 import Lib.Datagen.Model as Model
 import Lib.Datagen.Recipe (CraftingResult(..), Ingredient(..), Recipe(..), SingleIngredient(..))
 import Lib.Datagen.Recipe.ShapedCrafting (ShapedCraftingRecipe)
-import Lib.Datagen.ResourceLocation ((:))
+import Lib.Datagen.ResourceLocation (ResourceLocation(..), getId, (:))
 import Lib.Datagen.Tag (TagCollection, singleEntry)
 import Lib.Kdl (Kdl, KdlNode, appendProp, appendValue, node, unfoldChildren)
 import Lib.Kdl as Kdl
@@ -87,7 +87,7 @@ hollowLogBlockstate ∷ LogDefinition → Blockstate
 hollowLogBlockstate log = Object.empty
   # Object.insert "axis=x"
       (rotatedVariant (hollowLogLocation <> "_horizontal") R90 R90)
-  # Object.insert "axis=y" (rotatedVariant (hollowLogLocation) R0 R0)
+  # Object.insert "axis=y" (singleVariant hollowLogLocation)
   # Object.insert "axis=z"
       (rotatedVariant (hollowLogLocation <> "_horizontal") R90 R0)
   # VariantBlockstate
@@ -153,3 +153,38 @@ hollowLog log = do
   tellAt _lang (simpleLangName (hollowLogName log))
   tellUSingleton _recipes (hollowLogName log) (hollowLogRecipe log)
   hollowLogTags log
+
+verticalSlabBlockstate ∷ ResourceLocation → Blockstate
+verticalSlabBlockstate (_ : name) = Object.empty
+  # Object.insert "type=double,axis=x" (singleVariant fullModel)
+  # Object.insert "type=double,axis=z" (singleVariant fullModel)
+  # Object.insert "type=top,axis=z" (singleVariant slabModel)
+  # Object.insert "type=bottom,axis=x" (rotatedVariantUvLock slabModel R0 R90)
+  # Object.insert "type=bottom,axis=z" (rotatedVariantUvLock slabModel R0 R180)
+  # Object.insert "type=top,axis=x" (rotatedVariantUvLock slabModel R0 R270)
+  # VariantBlockstate
+  where
+  slabModel = "kdlycontent:block/" <> name <> "_vertical_slab"
+  fullModel = slabModel <> "_double"
+
+verticalSlabModels ∷ ResourceLocation → UniqueStrMap Model
+verticalSlabModels (namespace : name) = Map.empty
+  # Map.insert ("block" / slabName)
+      (model "quiet_life:block/templates/vertical_slab")
+  # Map.insert ("block" / slabName <> "_double")
+      (Model.all "minecraft:block/cube_all" baseTexture)
+  # Map.insert ("item" / slabName)
+      (itemModel ("kdlycontent:block/" <> slabName))
+  # toUMap
+  where
+  model template = Model.pillar template { side: baseTexture, end: baseTexture }
+  baseTexture = namespace <> ":block/" <> name
+  slabName = name <> "_vertical_slab"
+
+verticalSlab ∷ ∀ r. ResourceLocation → Run (DefaultBlockRows r) Unit
+verticalSlab baseBlock = do
+  tellUSingleton _blockstates verticalSlabName
+    (verticalSlabBlockstate baseBlock)
+  tellAt _models (verticalSlabModels baseBlock)
+  where
+  verticalSlabName = getId baseBlock <> "_vertical_slab"
