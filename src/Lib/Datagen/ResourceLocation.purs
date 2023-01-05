@@ -7,31 +7,29 @@ import Data.String as String
 import Foreign.ReadWrite (class WriteForeign, writeForeign)
 import Node.Path (sep)
 
-newtype ResourceLocation = ResourceLocation { namespace ∷ String, id ∷ String }
+data ResourceLocation = ResourceLocation String String
 
-derive newtype instance Eq ResourceLocation
+infix 2 ResourceLocation as :
+
+instance Eq ResourceLocation where
+  eq (ns1 : id1) (ns2 : id2) = ns1 == ns2 && id1 == id2
 
 instance Ord ResourceLocation where
-  compare (ResourceLocation rl1) (ResourceLocation rl2) = compare
-    [ rl1.namespace, rl1.id ]
-    [ rl2.namespace, rl2.id ]
+  compare (ResourceLocation ns1 id1) (ResourceLocation ns2 id2) = compare
+    [ ns1, id1 ]
+    [ ns2, id2 ]
 
 instance WriteForeign ResourceLocation where
   writeForeign rl = writeForeign (toStr rl)
 
 toStr ∷ ResourceLocation → String
-toStr (ResourceLocation { namespace, id }) = namespace <> ":" <> id
-
-resourceLocation ∷ String → String → ResourceLocation
-resourceLocation namespace id = ResourceLocation { namespace, id }
+toStr (namespace : id) = namespace <> ":" <> id
 
 getNamespace ∷ ResourceLocation → String
-getNamespace (ResourceLocation { namespace }) = namespace
+getNamespace (namespace : _) = namespace
 
 getId ∷ ResourceLocation → String
-getId (ResourceLocation { id }) = id
+getId (_ : id) = id
 
 getIdAsPath ∷ ResourceLocation → String
 getIdAsPath = getId >>> String.replace (Pattern "/") (Replacement sep)
-
-infix 2 resourceLocation as :
