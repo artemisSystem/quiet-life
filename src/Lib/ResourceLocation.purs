@@ -1,4 +1,4 @@
-module Lib.Datagen.ResourceLocation where
+module Lib.ResourceLocation where
 
 import Prelude
 

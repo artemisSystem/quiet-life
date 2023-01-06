@@ -3,8 +3,8 @@ module QuietLife.Tags where
 import Prelude
 
 import Data.Foldable (foldMap)
-import Lib.Datagen.ResourceLocation ((:))
 import Lib.Datagen.Tag (TagCollection, singleEntry)
+import Lib.ResourceLocation ((:))
 import QuietLife.Templates (_block_tags, _item_tags)
 import Run (Run)
 import Run.Writer (Writer, tellAt)

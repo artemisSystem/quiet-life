@@ -15,11 +15,11 @@ import Lib.Datagen.Model (Model, itemModel)
 import Lib.Datagen.Model as Model
 import Lib.Datagen.Recipe (CraftingResult(..), Ingredient(..), Recipe(..), SingleIngredient(..))
 import Lib.Datagen.Recipe.ShapedCrafting (ShapedCraftingRecipe)
-import Lib.Datagen.ResourceLocation (ResourceLocation, getId, (:))
 import Lib.Datagen.Tag (TagCollection, singleEntry)
 import Lib.Kdl (Kdl, KdlNode, appendProp, appendValue, node, unfoldChildren)
 import Lib.Kdl as Kdl
 import Lib.OnlyOne (UniqueRLMap, toUMap)
+import Lib.ResourceLocation (ResourceLocation, getId, (:))
 import Lib.Util (tellUSingleton, (/))
 import QualifiedDo.Semigroup as S
 import QualifiedDo.Unfoldable as U

@@ -7,7 +7,7 @@ import Data.Generic.Rep (class Generic)
 import Data.Map (Map, SemigroupMap(..))
 import Data.Ord (class Ord1)
 import Data.Show.Generic (genericShow)
-import Lib.Datagen.ResourceLocation (ResourceLocation)
+import Lib.ResourceLocation (ResourceLocation)
 import Safe.Coerce (coerce)
 
 data OnlyOne a = One a | MoreThanOne (Array a)

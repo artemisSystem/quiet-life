@@ -8,8 +8,8 @@ import Data.Map as Map
 import Data.Symbol (class IsSymbol)
 import Effect.Aff (Aff, attempt, message)
 import Effect.Class.Console (log)
-import Lib.Datagen.ResourceLocation (ResourceLocation)
 import Lib.OnlyOne (UniqueRLMap, toUMap)
+import Lib.ResourceLocation (ResourceLocation)
 import Node.Path (FilePath, sep)
 import Prim.Row as Row
 import QualifiedDo.Semigroup as S

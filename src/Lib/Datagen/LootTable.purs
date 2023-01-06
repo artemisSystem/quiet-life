@@ -3,8 +3,8 @@ module Lib.Datagen.LootTable where
 import Prelude
 
 import Foreign.ReadWrite (class WriteForeign, writeForeign)
-import Lib.Datagen.ResourceLocation (ResourceLocation)
 import Lib.Json (unsafeFormatJson)
+import Lib.ResourceLocation (ResourceLocation)
 import Lib.Serializer (class IsDataType, class Serializable)
 
 -- | The whole system is wayyy to complex to be worth modeling in full. Instead

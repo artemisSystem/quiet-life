@@ -4,7 +4,7 @@ import Prelude
 
 import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
-import Lib.Datagen.ResourceLocation (ResourceLocation, (:))
+import Lib.ResourceLocation (ResourceLocation, (:))
 import QualifiedDo.Semigroup as S
 import Record as Record
 import Type.Proxy (Proxy(..))
