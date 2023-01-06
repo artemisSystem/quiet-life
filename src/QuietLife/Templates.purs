@@ -19,7 +19,7 @@ import Lib.Datagen.ResourceLocation (ResourceLocation, getId, (:))
 import Lib.Datagen.Tag (TagCollection, singleEntry)
 import Lib.Kdl (Kdl, KdlNode, appendProp, appendValue, node, unfoldChildren)
 import Lib.Kdl as Kdl
-import Lib.OnlyOne (UniqueStrMap, toUMap)
+import Lib.OnlyOne (UniqueRLMap, toUMap)
 import Lib.Util (tellUSingleton, (/))
 import QualifiedDo.Semigroup as S
 import QualifiedDo.Unfoldable as U
@@ -30,13 +30,13 @@ import Type.Proxy (Proxy(..))
 
 type DefaultBlockRows r =
   ( blocks ∷ Writer Kdl
-  , blockstates ∷ Writer (UniqueStrMap Blockstate)
-  , models ∷ Writer (UniqueStrMap Model)
+  , blockstates ∷ Writer (UniqueRLMap Blockstate)
+  , models ∷ Writer (UniqueRLMap Model)
   , lang ∷ Writer Lang
-  , recipes ∷ Writer (UniqueStrMap ShapedCraftingRecipe)
+  , recipes ∷ Writer (UniqueRLMap ShapedCraftingRecipe)
   , block_tags ∷ Writer TagCollection
   , item_tags ∷ Writer TagCollection
-  , loot_tables ∷ Writer (UniqueStrMap LootTable)
+  , loot_tables ∷ Writer (UniqueRLMap LootTable)
   | r
   )
 
@@ -100,13 +100,13 @@ hollowLogBlockstate log = Object.empty
   where
   hollowLogLocation = "kdlycontent:block/" <> hollowLogName log
 
-hollowLogModels ∷ LogDefinition → UniqueStrMap Model
+hollowLogModels ∷ LogDefinition → UniqueRLMap Model
 hollowLogModels log = Map.empty
-  # Map.insert ("block" / hollowLogName log)
+  # Map.insert ("kdlycontent" : "block" / hollowLogName log)
       (model "quiet_life:block/templates/hollow_log")
-  # Map.insert ("block" / hollowLogName log <> "_horizontal")
+  # Map.insert ("kdlycontent" : "block" / hollowLogName log <> "_horizontal")
       (model "quiet_life:block/templates/hollow_log_horizontal")
-  # Map.insert ("item" / hollowLogName log)
+  # Map.insert ("kdlycontent" : "item" / hollowLogName log)
       (itemModel ("kdlycontent:block/" <> hollowLogName log))
   # toUMap
   where
@@ -154,12 +154,14 @@ hollowLogTags log = do
 hollowLog ∷ ∀ r. LogDefinition → Run (DefaultBlockRows r) Unit
 hollowLog log = do
   tellAt _blocks (Kdl.singleton $ hollowLogBlock log)
-  tellUSingleton _blockstates (hollowLogName log) (hollowLogBlockstate log)
+  tellUSingleton _blockstates ("kdlycontent" : hollowLogName log)
+    (hollowLogBlockstate log)
   tellAt _models (hollowLogModels log)
   tellAt _lang (simpleLangName (hollowLogName log))
-  tellUSingleton _recipes (hollowLogName log) (hollowLogRecipe log)
+  tellUSingleton _recipes ("kdlycontent" : hollowLogName log)
+    (hollowLogRecipe log)
   hollowLogTags log
-  tellUSingleton _loot_tables (hollowLogName log)
+  tellUSingleton _loot_tables ("kdlycontent" : hollowLogName log)
     (LootTable.SingleDrop ("kdlycontent" : hollowLogName log))
 
 verticalSlabBlockstate ∷ ResourceLocation → Blockstate
@@ -175,13 +177,13 @@ verticalSlabBlockstate (_ : name) = Object.empty
   slabModel = "kdlycontent:block/" <> name <> "_vertical_slab"
   fullModel = slabModel <> "_double"
 
-verticalSlabModels ∷ ResourceLocation → UniqueStrMap Model
+verticalSlabModels ∷ ResourceLocation → UniqueRLMap Model
 verticalSlabModels (namespace : name) = Map.empty
-  # Map.insert ("block" / slabName)
+  # Map.insert ("kdlycontent" : "block" / slabName)
       (model "quiet_life:block/templates/vertical_slab")
-  # Map.insert ("block" / slabName <> "_double")
+  # Map.insert ("kdlycontent" : "block" / slabName <> "_double")
       (Model.all "minecraft:block/cube_all" baseTexture)
-  # Map.insert ("item" / slabName)
+  # Map.insert ("kdlycontent" : "item" / slabName)
       (itemModel ("kdlycontent:block/" <> slabName))
   # toUMap
   where
@@ -191,7 +193,7 @@ verticalSlabModels (namespace : name) = Map.empty
 
 verticalSlab ∷ ∀ r. ResourceLocation → Run (DefaultBlockRows r) Unit
 verticalSlab baseBlock = do
-  tellUSingleton _blockstates verticalSlabName
+  tellUSingleton _blockstates ("kdlycontent" : verticalSlabName)
     (verticalSlabBlockstate baseBlock)
   tellAt _models (verticalSlabModels baseBlock)
   where

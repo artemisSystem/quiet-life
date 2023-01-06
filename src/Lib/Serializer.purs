@@ -6,9 +6,11 @@ import Data.FoldableWithIndex (forWithIndex_)
 import Data.Semigroup.First (First(..))
 import Data.Symbol (class IsSymbol)
 import Data.Tuple (Tuple(..))
+import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Effect.Exception (throw)
-import Lib.OnlyOne (OnlyOne(..), UniqueStrMap)
+import Lib.Datagen.ResourceLocation ((:))
+import Lib.OnlyOne (OnlyOne(..), UniqueRLMap)
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (mkdir', writeTextFile)
 import Node.FS.Perms (all, mkPerms, read)
@@ -39,16 +41,19 @@ writeData
   . IsDataType dataType
   ⇒ Serializable dataType
   ⇒ IsSymbol name
-  ⇒ Row.Cons name (Writer (UniqueStrMap dataType)) (AFF + r) (AFF + wr)
+  ⇒ Row.Cons name (Writer (UniqueRLMap dataType)) (AFF + r) (AFF + wr)
   ⇒ Proxy name
+  → FilePath
   → FilePath
   → Run (AFF + wr) a
   → Run (AFF + r) a
-writeData proxy destinationFolder m = do
+writeData proxy dataFolder subfolder m = do
   let extension = "." <> getFileExtension (Proxy ∷ _ dataType)
   Tuple files a ← runWriterAt proxy m
-  a <$ forWithIndex_ files \path content → liftAff do
-    let filePath = (Path.concat [ destinationFolder, path <> extension ])
+  a <$ forWithIndex_ files \(namespace : path) content → liftAff do
+    let
+      filePath =
+        (Path.concat [ dataFolder, namespace, subfolder, path <> extension ])
     stringContent ← case content of
       One content' → pure (serialize content')
       MoreThanOne _ → liftEffect $ throw $
@@ -82,4 +87,19 @@ writeDatum proxy destinationFolder path m = do
       stringContent
   pure a
   where
+  mkdir folder = mkdir' folder { recursive: true, mode: mkPerms all read read }
+
+writeFile
+  ∷ ∀ dataType
+  . IsDataType dataType
+  ⇒ Serializable dataType
+  ⇒ FilePath
+  → dataType
+  → Aff Unit
+writeFile path content = do
+  mkdir (dirname file)
+  writeTextFile UTF8 file (serialize content)
+  where
+  extension = "." <> getFileExtension (Proxy ∷ _ dataType)
+  file = path <> extension
   mkdir folder = mkdir' folder { recursive: true, mode: mkPerms all read read }

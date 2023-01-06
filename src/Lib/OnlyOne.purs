@@ -7,6 +7,7 @@ import Data.Generic.Rep (class Generic)
 import Data.Map (Map, SemigroupMap(..))
 import Data.Ord (class Ord1)
 import Data.Show.Generic (genericShow)
+import Lib.Datagen.ResourceLocation (ResourceLocation)
 import Safe.Coerce (coerce)
 
 data OnlyOne a = One a | MoreThanOne (Array a)
@@ -30,7 +31,7 @@ instance Semigroup (OnlyOne a) where
   append (MoreThanOne as) (One b) = MoreThanOne (as <> [ b ])
   append (MoreThanOne as) (MoreThanOne bs) = MoreThanOne (as <> bs)
 
-type UniqueStrMap v = SemigroupMap String (OnlyOne v)
+type UniqueRLMap v = SemigroupMap ResourceLocation (OnlyOne v)
 
-toUMap ∷ ∀ v. Map String v → UniqueStrMap v
+toUMap ∷ ∀ v. Map ResourceLocation v → UniqueRLMap v
 toUMap = map One >>> coerce

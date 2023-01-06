@@ -9,7 +9,7 @@ import Node.Path (sep)
 
 data ResourceLocation = ResourceLocation String String
 
-infix 2 ResourceLocation as :
+infix 1 ResourceLocation as :
 
 instance Eq ResourceLocation where
   eq (ns1 : id1) (ns2 : id2) = ns1 == ns2 && id1 == id2

@@ -8,7 +8,8 @@ import Data.Map as Map
 import Data.Symbol (class IsSymbol)
 import Effect.Aff (Aff, attempt, message)
 import Effect.Class.Console (log)
-import Lib.OnlyOne (UniqueStrMap, toUMap)
+import Lib.Datagen.ResourceLocation (ResourceLocation)
+import Lib.OnlyOne (UniqueRLMap, toUMap)
 import Node.Path (FilePath, sep)
 import Prim.Row as Row
 import QualifiedDo.Semigroup as S
@@ -20,7 +21,7 @@ import Type.Proxy (Proxy)
 appendPath ∷ FilePath → FilePath → FilePath
 appendPath a b = a <> sep <> b
 
-infixl 1 appendPath as /
+infixl 2 appendPath as /
 
 sMapSingleton ∷ ∀ k v. k → v → SemigroupMap k v
 sMapSingleton k v = coerce (Map.singleton k v)
@@ -38,9 +39,9 @@ tellSingleton s key value = tellAt s (sMapSingleton key value)
 tellUSingleton
   ∷ ∀ w r t s
   . IsSymbol s
-  ⇒ Row.Cons s (Writer (UniqueStrMap w)) t r
+  ⇒ Row.Cons s (Writer (UniqueRLMap w)) t r
   ⇒ Proxy s
-  → String
+  → ResourceLocation
   → w
   → Run r Unit
 tellUSingleton s key value = tellAt s (toUMap (Map.singleton key value))
