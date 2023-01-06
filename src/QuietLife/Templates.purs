@@ -6,14 +6,16 @@ import Data.Map as Map
 import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Foreign.Object as Object
-import Lib.Datagen.Blockstate (Blockstate(..), Rotation(..), VariantBlockstate, rotatedVariant, rotatedVariantUvLock, singleVariant)
+import Lib.Datagen.Blockstate (Blockstate(..), Rotation(..), rotatedVariant, rotatedVariantUvLock, singleVariant)
 import Lib.Datagen.KdlyContent.Block (block, box)
 import Lib.Datagen.Lang (Lang, simpleLangName)
+import Lib.Datagen.LootTable (LootTable)
+import Lib.Datagen.LootTable as LootTable
 import Lib.Datagen.Model (Model, itemModel)
 import Lib.Datagen.Model as Model
 import Lib.Datagen.Recipe (CraftingResult(..), Ingredient(..), Recipe(..), SingleIngredient(..))
 import Lib.Datagen.Recipe.ShapedCrafting (ShapedCraftingRecipe)
-import Lib.Datagen.ResourceLocation (ResourceLocation(..), getId, (:))
+import Lib.Datagen.ResourceLocation (ResourceLocation, getId, (:))
 import Lib.Datagen.Tag (TagCollection, singleEntry)
 import Lib.Kdl (Kdl, KdlNode, appendProp, appendValue, node, unfoldChildren)
 import Lib.Kdl as Kdl
@@ -34,6 +36,7 @@ type DefaultBlockRows r =
   , recipes ∷ Writer (UniqueStrMap ShapedCraftingRecipe)
   , block_tags ∷ Writer TagCollection
   , item_tags ∷ Writer TagCollection
+  , loot_tables ∷ Writer (UniqueStrMap LootTable)
   | r
   )
 
@@ -57,6 +60,9 @@ _block_tags = Proxy
 
 _item_tags ∷ Proxy "item_tags"
 _item_tags = Proxy
+
+_loot_tables ∷ Proxy "loot_tables"
+_loot_tables = Proxy
 
 hollowLogName ∷ LogDefinition → String
 hollowLogName log = "hollow_" <> log.name <> "_" <> log.logSuffix
@@ -153,6 +159,8 @@ hollowLog log = do
   tellAt _lang (simpleLangName (hollowLogName log))
   tellUSingleton _recipes (hollowLogName log) (hollowLogRecipe log)
   hollowLogTags log
+  tellUSingleton _loot_tables (hollowLogName log)
+    (LootTable.SingleDrop ("kdlycontent" : hollowLogName log))
 
 verticalSlabBlockstate ∷ ResourceLocation → Blockstate
 verticalSlabBlockstate (_ : name) = Object.empty

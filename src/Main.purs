@@ -12,7 +12,7 @@ import Lib.Util (prettyPrintErrors, (/))
 import Node.FS.Aff (rm')
 import QuietLife.Blocks as Blocks
 import QuietLife.Tags as Tags
-import QuietLife.Templates (_block_tags, _blocks, _blockstates, _item_tags, _lang, _models, _recipes)
+import QuietLife.Templates (_block_tags, _blocks, _blockstates, _item_tags, _lang, _loot_tables, _models, _recipes)
 import Run (Run, runBaseAff)
 import Run.Writer (Writer, tellAt)
 import Type.Proxy (Proxy(..))
@@ -44,6 +44,7 @@ main = launchAff_ do
     # writeData _recipes (data_ / "kdlycontent" / "recipes")
     # writeTags _block_tags data_ "blocks"
     # writeTags _item_tags data_ "items"
+    # writeData _loot_tables (data_ / "kdlycontent" / "loot_tables" / "blocks")
     # runBaseAff
     # prettyPrintErrors "writing resources"
   where
