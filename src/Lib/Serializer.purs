@@ -7,10 +7,8 @@ import Data.Semigroup.First (First(..))
 import Data.Symbol (class IsSymbol)
 import Data.Tuple (Tuple(..))
 import Effect.Aff (Aff)
-import Effect.Class (liftEffect)
-import Effect.Exception (throw)
-import Lib.OnlyOne (OnlyOne(..), UniqueRLMap)
-import Lib.ResourceLocation ((:))
+import Lib.OnlyOne (UniqueRLMap, getOneOrFileError)
+import Lib.ResourceLocation (getRLAsPath)
 import Node.Encoding (Encoding(..))
 import Node.FS.Aff (mkdir', writeTextFile)
 import Node.FS.Perms (all, mkPerms, read)
@@ -48,20 +46,10 @@ writeData
   → Run (AFF + wr) a
   → Run (AFF + r) a
 writeData proxy dataFolder subfolder m = do
-  let extension = "." <> getFileExtension (Proxy ∷ _ dataType)
   Tuple files a ← runWriterAt proxy m
-  a <$ forWithIndex_ files \(namespace : path) content → liftAff do
-    let
-      filePath =
-        (Path.concat [ dataFolder, namespace, subfolder, path <> extension ])
-    stringContent ← case content of
-      One content' → pure (serialize content')
-      MoreThanOne _ → liftEffect $ throw $
-        "Attempted to write multiple resources to the same file: " <> filePath
-    mkdir (dirname filePath)
-    writeTextFile UTF8 filePath stringContent
-  where
-  mkdir folder = mkdir' folder { recursive: true, mode: mkPerms all read read }
+  a <$ forWithIndex_ files \rl content → liftAff do
+    let filePath = (Path.concat [ dataFolder, getRLAsPath subfolder rl ])
+    getOneOrFileError filePath content >>= writeFile filePath
 
 writeDatum
   ∷ ∀ wr r name a dataType
@@ -77,17 +65,7 @@ writeDatum
   → Run (AFF + r) a
 writeDatum proxy destinationFolder path m = do
   Tuple content a ← runWriterAt proxy m
-  let
-    extension = "." <> getFileExtension (Proxy ∷ _ dataType)
-    stringContent = serialize content
-  liftAff do
-    mkdir $ dirname (Path.concat [ destinationFolder, path <> extension ])
-    writeTextFile UTF8
-      (Path.concat [ destinationFolder, path <> extension ])
-      stringContent
-  pure a
-  where
-  mkdir folder = mkdir' folder { recursive: true, mode: mkPerms all read read }
+  a <$ liftAff do writeFile (Path.concat [ destinationFolder, path ]) content
 
 writeFile
   ∷ ∀ dataType

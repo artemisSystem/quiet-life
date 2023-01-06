@@ -7,7 +7,10 @@ import Data.Generic.Rep (class Generic)
 import Data.Map (Map, SemigroupMap(..))
 import Data.Ord (class Ord1)
 import Data.Show.Generic (genericShow)
+import Effect.Class (class MonadEffect, liftEffect)
+import Effect.Exception (throw)
 import Lib.ResourceLocation (ResourceLocation)
+import Node.Path (FilePath)
 import Safe.Coerce (coerce)
 
 data OnlyOne a = One a | MoreThanOne (Array a)
@@ -35,3 +38,8 @@ type UniqueRLMap v = SemigroupMap ResourceLocation (OnlyOne v)
 
 toUMap ∷ ∀ v. Map ResourceLocation v → UniqueRLMap v
 toUMap = map One >>> coerce
+
+getOneOrFileError ∷ ∀ m. MonadEffect m ⇒ FilePath → OnlyOne ~> m
+getOneOrFileError _ (One x) = pure x
+getOneOrFileError filePath (MoreThanOne _) = liftEffect $ throw $
+  "Attempted to write multiple resources to the same file: " <> filePath

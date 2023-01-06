@@ -5,7 +5,8 @@ import Prelude
 import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Foreign.ReadWrite (class WriteForeign, writeForeign)
-import Node.Path (sep)
+import Node.Path (FilePath, sep)
+import Node.Path as Path
 
 data ResourceLocation = ResourceLocation String String
 
@@ -31,5 +32,9 @@ getNamespace (namespace : _) = namespace
 getId ∷ ResourceLocation → String
 getId (_ : id) = id
 
-getIdAsPath ∷ ResourceLocation → String
+getIdAsPath ∷ ResourceLocation → FilePath
 getIdAsPath = getId >>> String.replace (Pattern "/") (Replacement sep)
+
+getRLAsPath ∷ FilePath → ResourceLocation → FilePath
+getRLAsPath subfolder rl = Path.concat
+  [ getNamespace rl, subfolder, getIdAsPath rl ]
