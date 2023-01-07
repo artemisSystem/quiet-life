@@ -2,7 +2,7 @@ module Lib.MapRun where
 
 import Prelude
 
-import Data.Functor.Variant (VariantF, inj)
+import Data.Functor.Variant (VariantF, expand, inj)
 import Data.Functor.Variant as VariantF
 import Data.Symbol (class IsSymbol)
 import Prim.Row as R
@@ -11,7 +11,6 @@ import Prim.RowList as RL
 import Run (Run)
 import Run as Run
 import Type.Proxy (Proxy(..))
-import Unsafe.Coerce (unsafeCoerce)
 
 class MapVariantF
   ∷ RowList (Type → Type)
@@ -39,6 +38,7 @@ instance mapVariantMatchCons ∷
   ( IsSymbol key
   , R.Cons key from tailFrom rowFrom
   , R.Cons key to tailTo rowTo
+  , R.Union tailTo x rowTo
   , R.Lacks key tailFrom
   , R.Lacks key tailTo
   , Functor to
@@ -52,18 +52,17 @@ instance mapVariantMatchCons ∷
     from
     to
   where
-  mapVariantF _ _ f = VariantF.on _key (f >>> inj _key)
-    (mapVariantF (Proxy ∷ _ rlTailFrom) (Proxy ∷ _ rlTailTo) f >>> expand' _key)
-    where
-    _key = (Proxy ∷ _ key)
+  mapVariantF _ _ f = VariantF.on (Proxy ∷ _ key) (f >>> inj (Proxy ∷ _ key))
+    (mapVariantF (Proxy ∷ _ rlTailFrom) (Proxy ∷ _ rlTailTo) f >>> expand)
 
 else instance mapVariantMissCons ∷
   ( IsSymbol key
-  , R.Cons key x tailFrom rowFrom
-  , R.Cons key x tailTo rowTo
+  , R.Cons key f tailFrom rowFrom
+  , R.Cons key f tailTo rowTo
+  , R.Union tailTo x rowTo
   , R.Lacks key tailFrom
   , R.Lacks key tailTo
-  , Functor x
+  , Functor f
   , MapVariantF rlTailFrom tailFrom rlTailTo tailTo from to
   ) ⇒
   MapVariantF
@@ -74,19 +73,8 @@ else instance mapVariantMissCons ∷
     from
     to
   where
-  mapVariantF _ _ f = VariantF.on _key (inj _key)
-    (mapVariantF (Proxy ∷ _ rlTailFrom) (Proxy ∷ _ rlTailTo) f >>> expand' _key)
-    where
-    _key = (Proxy ∷ _ key)
-
--- | Alternative for `Data.Functor.Variant.expand` that uses Cons instead of
--- | Union.
-expand'
-  ∷ ∀ lt gt key val
-  . R.Cons key val lt gt
-  ⇒ Proxy key
-  → VariantF lt ~> VariantF gt
-expand' _ = unsafeCoerce
+  mapVariantF _ _ f = VariantF.on (Proxy ∷ _ key) (inj (Proxy ∷ _ key))
+    (mapVariantF (Proxy ∷ _ rlTailFrom) (Proxy ∷ _ rlTailTo) f >>> expand)
 
 -- | Transform every field of a certain functor in a `Run` computation.
 -- | For example, `mapRun (f :: Either e ~> Maybe)` applied to
