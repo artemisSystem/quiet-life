@@ -5,6 +5,7 @@ import Prelude
 import Data.Foldable (foldMap)
 import Lib.Datagen.Tag (TagCollection, singleEntry)
 import Lib.ResourceLocation ((:))
+import QualifiedDo.Semigroup as S
 import QuietLife.Templates (_block_tags, _item_tags)
 import Run (Run)
 import Run.Writer (Writer, tellAt)
@@ -20,7 +21,8 @@ newTags = do
       tier ← [ "manasteel", "elementium" ]
       tool ← [ "axe", pickaxe tier, "hoe", "shears", "shovel", "sword" ]
       [ "botania" : (tier <> "_" <> tool) ]
-  tellAt _block_tags $
+  tellAt _block_tags S.do
     singleEntry ("minecraft" : "mineable/pickaxe") ("minecraft" : "glass")
+    singleEntry ("minecraft" : "mineable/pickaxe") ("minecraft" : "glass_pane")
   where
   pickaxe tier = if tier == "manasteel" then "pick" else "pickaxe"
