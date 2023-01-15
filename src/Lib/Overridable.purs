@@ -5,11 +5,12 @@ import Prelude
 import Data.Eq (class Eq1)
 import Data.Foldable (foldMap)
 import Data.Generic.Rep (class Generic)
-import Data.Lazy (Lazy, defer, force)
+import Data.Lazy (Lazy, force)
 import Data.Map (SemigroupMap(..))
 import Data.Map as Map
 import Data.Ord (class Ord1)
 import Data.Show.Generic (genericShow)
+import Lib.ResourceLocation (ResourceLocation)
 
 data Overridable a = Override a | Default (Lazy a)
 
@@ -41,8 +42,10 @@ getOverridable (Default a) = force a
 
 type Overridables k v = SemigroupMap k (Overridable v)
 
-default ∷ ∀ k v. k → (Unit → v) → Overridables k v
-default k v = SemigroupMap (Map.singleton k (Default $ defer v))
+type OverridablesRL v = Overridables ResourceLocation v
+
+default ∷ ∀ k v. k → Lazy v → Overridables k v
+default k v = SemigroupMap (Map.singleton k (Default v))
 
 override ∷ ∀ k v. k → v → Overridables k v
 override k v = SemigroupMap (Map.singleton k (Override v))
