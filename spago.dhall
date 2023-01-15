@@ -13,6 +13,7 @@
   , "foreign-object"
   , "foreign-readwrite"
   , "integers"
+  , "lazy"
   , "lists"
   , "maybe"
   , "newtype"
