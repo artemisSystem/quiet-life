@@ -125,8 +125,9 @@ hollowLogRecipe
   ∷ LogDefinition → ShapedCraftingRecipe
 hollowLogRecipe log = Recipe
   { pattern:
-      [ "# #"
+      [ " # "
       , "# #"
+      , " # "
       ]
   , key: Object.singleton "#" (Single $ ItemIngredient logLocation)
   , result: CraftingResult { count: 4, item: hollowLogLocation }
