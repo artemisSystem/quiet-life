@@ -6,7 +6,7 @@ import Data.Map as Map
 import Data.String (Pattern(..), Replacement(..))
 import Data.String as String
 import Foreign.Object as Object
-import Lib.Datagen.Blockstate (Blockstate(..), Rotation(..), rotatedVariant, rotatedVariantUvLock, singleVariant)
+import Lib.Datagen.Blockstate (Blockstate(..), Rotation(..), rotatedVariant, singleVariant)
 import Lib.Datagen.KdlyContent.Block (block, box)
 import Lib.Datagen.Lang (Lang, simpleLangName)
 import Lib.Datagen.LootTable (LootTable)
@@ -19,7 +19,7 @@ import Lib.Datagen.Tag (TagCollection, singleEntry)
 import Lib.Kdl (Kdl, KdlNode, appendProp, appendValue, node, unfoldChildren)
 import Lib.Kdl as Kdl
 import Lib.OnlyOne (UniqueRLMap, toUMap)
-import Lib.ResourceLocation (ResourceLocation, getId, (:))
+import Lib.ResourceLocation ((:))
 import Lib.Util (tellUSingleton, (/))
 import QualifiedDo.Semigroup as S
 import QualifiedDo.Unfoldable as U
@@ -64,6 +64,7 @@ _item_tags = Proxy
 _loot_tables ∷ Proxy "loot_tables"
 _loot_tables = Proxy
 
+{-}
 hollowLogName ∷ LogDefinition → String
 hollowLogName log = "hollow_" <> log.name <> "_" <> log.logSuffix
 
@@ -164,38 +165,3 @@ hollowLog log = do
   hollowLogTags log
   tellUSingleton _loot_tables ("kdlycontent" : hollowLogName log)
     (LootTable.SingleDrop ("kdlycontent" : hollowLogName log))
-
-verticalSlabBlockstate ∷ ResourceLocation → Blockstate
-verticalSlabBlockstate (_ : name) = Object.empty
-  # Object.insert "type=double,axis=x" (singleVariant fullModel)
-  # Object.insert "type=double,axis=z" (singleVariant fullModel)
-  # Object.insert "type=top,axis=z" (singleVariant slabModel)
-  # Object.insert "type=bottom,axis=x" (rotatedVariantUvLock slabModel R0 R90)
-  # Object.insert "type=bottom,axis=z" (rotatedVariantUvLock slabModel R0 R180)
-  # Object.insert "type=top,axis=x" (rotatedVariantUvLock slabModel R0 R270)
-  # VariantBlockstate
-  where
-  slabModel = "kdlycontent:block/" <> name <> "_vertical_slab"
-  fullModel = slabModel <> "_double"
-
-verticalSlabModels ∷ ResourceLocation → UniqueRLMap Model
-verticalSlabModels (namespace : name) = Map.empty
-  # Map.insert ("kdlycontent" : "block" / slabName)
-      (model "quiet_life:block/templates/vertical_slab")
-  # Map.insert ("kdlycontent" : "block" / slabName <> "_double")
-      (Model.all "minecraft:block/cube_all" baseTexture)
-  # Map.insert ("kdlycontent" : "item" / slabName)
-      (itemModel ("kdlycontent:block/" <> slabName))
-  # toUMap
-  where
-  model template = Model.pillar template { side: baseTexture, end: baseTexture }
-  baseTexture = namespace <> ":block/" <> name
-  slabName = name <> "_vertical_slab"
-
-verticalSlab ∷ ∀ r. ResourceLocation → Run (DefaultBlockRows r) Unit
-verticalSlab baseBlock = do
-  tellUSingleton _blockstates ("kdlycontent" : verticalSlabName)
-    (verticalSlabBlockstate baseBlock)
-  tellAt _models (verticalSlabModels baseBlock)
-  where
-  verticalSlabName = getId baseBlock <> "_vertical_slab"
