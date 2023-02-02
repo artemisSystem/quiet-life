@@ -104,7 +104,7 @@ instance toBuilderFieldsMatchConsDefault ∷
   , ToBuilderFields rlTailFrom tailFrom rlTailTo tailTo
   ) ⇒
   ToBuilderFields
-    (RL.Cons key (Writer m) rlTailFrom)
+    (RL.Cons key (Writer (Lazy m)) rlTailFrom)
     rowFrom
     (RL.Cons key (Writer (OverridablesRL m)) rlTailTo)
     rowTo
