@@ -5,6 +5,7 @@ import Prelude
 import Data.Eq (class Eq1)
 import Data.Generic.Rep (class Generic)
 import Data.Map (Map, SemigroupMap(..))
+import Data.Map as Map
 import Data.Ord (class Ord1)
 import Data.Show.Generic (genericShow)
 import Effect.Class (class MonadEffect, liftEffect)
@@ -34,10 +35,15 @@ instance Semigroup (OnlyOne a) where
   append (MoreThanOne as) (One b) = MoreThanOne (as <> [ b ])
   append (MoreThanOne as) (MoreThanOne bs) = MoreThanOne (as <> bs)
 
+type UniqueStrMap v = SemigroupMap String (OnlyOne v)
+
 type UniqueRLMap v = SemigroupMap ResourceLocation (OnlyOne v)
 
-toUMap ∷ ∀ v. Map ResourceLocation v → UniqueRLMap v
+toUMap ∷ ∀ k v. Map k v → SemigroupMap k (OnlyOne v)
 toUMap = map One >>> coerce
+
+uSingleton ∷ ∀ k v. k → v → SemigroupMap k (OnlyOne v)
+uSingleton k v = toUMap (Map.singleton k v)
 
 getOneOrFileError ∷ ∀ m. MonadEffect m ⇒ FilePath → OnlyOne ~> m
 getOneOrFileError _ (One x) = pure x
