@@ -18,6 +18,21 @@ instance WriteForeign Rotation where
   writeForeign R180 = writeForeign 180
   writeForeign R270 = writeForeign 270
 
+allRotations ∷ Array Rotation
+allRotations = [ R0, R90, R180, R270 ]
+
+nextRotation ∷ Rotation → Rotation
+nextRotation R0 = R90
+nextRotation R90 = R180
+nextRotation R180 = R270
+nextRotation R270 = R0
+
+prevRotation ∷ Rotation → Rotation
+prevRotation R0 = R270
+prevRotation R90 = R0
+prevRotation R180 = R90
+prevRotation R270 = R180
+
 type SingleVariant r =
   { model ∷ ResourceLocation
   , x ∷ Rotation
