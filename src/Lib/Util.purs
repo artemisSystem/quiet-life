@@ -8,8 +8,7 @@ import Data.Map as Map
 import Data.Symbol (class IsSymbol)
 import Effect.Aff (Aff, attempt, message)
 import Effect.Class.Console (log)
-import Lib.OnlyOne (UniqueRLMap, toUMap)
-import Lib.ResourceLocation (ResourceLocation)
+import Lib.OnlyOne (OnlyOne, uSingleton)
 import Node.Path (FilePath, sep)
 import Prim.Row as Row
 import QualifiedDo.Semigroup as S
@@ -27,24 +26,24 @@ sMapSingleton ∷ ∀ k v. k → v → SemigroupMap k v
 sMapSingleton k v = coerce (Map.singleton k v)
 
 tellSingleton
-  ∷ ∀ w r t s
+  ∷ ∀ k w r t s
   . IsSymbol s
-  ⇒ Row.Cons s (Writer (SemigroupMap String w)) t r
+  ⇒ Row.Cons s (Writer (SemigroupMap k w)) t r
   ⇒ Proxy s
-  → String
+  → k
   → w
   → Run r Unit
-tellSingleton s key value = tellAt s (sMapSingleton key value)
+tellSingleton sym key value = tellAt sym (sMapSingleton key value)
 
 tellUSingleton
-  ∷ ∀ w r t s
+  ∷ ∀ k w r t s
   . IsSymbol s
-  ⇒ Row.Cons s (Writer (UniqueRLMap w)) t r
+  ⇒ Row.Cons s (Writer (SemigroupMap k (OnlyOne w))) t r
   ⇒ Proxy s
-  → ResourceLocation
+  → k
   → w
   → Run r Unit
-tellUSingleton s key value = tellAt s (toUMap (Map.singleton key value))
+tellUSingleton sym key value = tellAt sym (uSingleton key value)
 
 prettyPrintErrors ∷ String → Aff Unit → Aff Unit
 prettyPrintErrors action aff = attempt aff >>= case _ of
