@@ -3,6 +3,8 @@ module Lib.Util where
 import Prelude
 
 import Data.Either (Either(..))
+import Data.Functor.Variant (VariantF)
+import Data.Functor.Variant as Variant
 import Data.Map (SemigroupMap(..))
 import Data.Map as Map
 import Data.Symbol (class IsSymbol)
@@ -10,12 +12,15 @@ import Effect.Aff (Aff, attempt, message)
 import Effect.Class.Console (log)
 import Lib.OnlyOne (OnlyOne, uSingleton)
 import Node.Path (FilePath, sep)
+import Prim.Row (class Cons, class Lacks)
 import Prim.Row as Row
 import QualifiedDo.Semigroup as S
 import Run (Run)
-import Run.Writer (Writer, tellAt)
+import Run as Run
+import Run.Writer (Writer(..), tellAt)
 import Safe.Coerce (coerce)
 import Type.Proxy (Proxy)
+import Unsafe.Coerce (unsafeCoerce)
 
 appendPath ∷ FilePath → FilePath → FilePath
 appendPath a b = a <> sep <> b
@@ -53,3 +58,22 @@ prettyPrintErrors action aff = attempt aff >>= case _ of
     action
     ". Error message: "
     message err
+
+censor
+  ∷ ∀ w w' a r r' t s
+  . IsSymbol s
+  ⇒ Cons s (Writer w) t r
+  ⇒ Cons s (Writer w') t r'
+  ⇒ Lacks s t
+  ⇒ Proxy s
+  → (w → w')
+  → Run r a
+  → Run r' a
+censor key f = Run.interpret (\run → Run.send (go run))
+  where
+  go ∷ _ ~> _
+  go = Variant.on key (\(Writer w a) → Variant.inj key do Writer (f w) a)
+    expand
+
+  expand ∷ VariantF t ~> VariantF r'
+  expand = unsafeCoerce
