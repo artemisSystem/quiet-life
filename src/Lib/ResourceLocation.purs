@@ -23,6 +23,12 @@ instance Ord ResourceLocation where
 instance WriteForeign ResourceLocation where
   writeForeign rl = writeForeign (toStr rl)
 
+append ∷ ResourceLocation → String → ResourceLocation
+append (namespace : id) str = namespace : (id <> str)
+
+prepend ∷ String → ResourceLocation → ResourceLocation
+prepend str (namespace : id) = namespace : (str <> id)
+
 toStr ∷ ResourceLocation → String
 toStr (namespace : id) = namespace <> ":" <> id
 
